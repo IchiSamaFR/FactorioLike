@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5011780118508169036}
   - component: {fileID: 4231548999287629780}
+  - component: {fileID: 211707995242651804}
   m_Layer: 0
   m_Name: tile
-  m_TagString: Untagged
+  m_TagString: GroundTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +46,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0.5, y: 0.5, z: 0.5}
+--- !u!114 &211707995242651804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2182656972778883944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b823488aea53c584aae7b8d544a42519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posX: 0
+  posZ: 0
+  Type: 
+  chunk: {fileID: 0}
 --- !u!1001 &2479282944455698691
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,20 +22,32 @@ public class Chunk : MonoBehaviour
 
 
     [Header("Others")]
-    List<GameObject> chunkBlocks = new List<GameObject>();
     public GameObject[,] groundBlocks = new GameObject[16, 16];
-    GameObject[,] buildedBlocks = new GameObject[16, 16];
+    public GameObject[,] buildedBlocks = new GameObject[16, 16];
     [SerializeField]
     List<MapGenLevel> levels = new List<MapGenLevel>();
 
     public GameObject Conveyor;
 
+    #region ----- Setup -----
     void Start()
     {
         SpeedMapGen();
-        GenBuild();
     }
 
+    public void Set(int width, int length, float scale, int xPos, int zPos, int seed, List<MapGenLevel> levels, MapGenerator mapGen)
+    {
+        this.width = width;
+        this.length = length;
+        this.scale = scale;
+        this.xPos = xPos;
+        this.zPos = zPos;
+        this.seed = seed;
+        this.levels = levels;
+        this.mapGen = mapGen;
+    }
+    #endregion
+    /*
     public void GenBuild()
     {
         int posX = 2;
@@ -67,19 +79,8 @@ public class Chunk : MonoBehaviour
         buildedBlocks[posX, posZ] = newConveyor;
         
     }
+    */
 
-
-    public void Set(int width, int length, float scale, int xPos, int zPos, int seed, List<MapGenLevel> levels, MapGenerator mapGen)
-    {
-        this.width = width;
-        this.length = length;
-        this.scale = scale;
-        this.xPos = xPos;
-        this.zPos = zPos;
-        this.seed = seed;
-        this.levels = levels;
-        this.mapGen = mapGen;
-    }
 
     public bool GetInfoAt(int x, int z)
     {
@@ -143,6 +144,19 @@ public class Chunk : MonoBehaviour
         return null;
     }
 
+    public void AddBuild(int x, int z, GameObject build, sbyte direction)
+    {
+        if(buildedBlocks[x, z])
+        {
+            Destroy(buildedBlocks[x, z]);
+        }
+        GameObject newConveyor = Instantiate(build, this.transform);
+        newConveyor.transform.position = this.transform.position + new Vector3(x, 1, z);
+        newConveyor.GetComponent<Conveyor>().Set(direction, 4, this, x, z);
+        buildedBlocks[x, z] = newConveyor;
+    }
+
+
     public void SpeedMapGen()
     {
         List<BlocToGen> mapBlocks = new List<BlocToGen>();
@@ -153,12 +167,15 @@ public class Chunk : MonoBehaviour
         {
             GameObject cube = Instantiate(levels[tile.id].model, this.transform);
             cube.transform.position = this.transform.position + new Vector3(tile.x, 0, tile.z);
-            chunkBlocks.Add(cube);
-
+            cube.GetComponent<Block>().Set(tile.x, tile.z, tile.id.ToString(), this);
             groundBlocks[(int)tile.x, (int)tile.z] = cube;
         }
     }
 
+
+
+
+    #region ----- Optimization -----
     public void DontShowChild()
     {
         foreach (Transform child in GetComponentsInChildren<Transform>())
@@ -170,6 +187,7 @@ public class Chunk : MonoBehaviour
         }
         active = false;
     }
+
     public void ShowChild()
     {
         foreach (Transform child in GetComponentsInChildren<Transform>())
@@ -181,6 +199,7 @@ public class Chunk : MonoBehaviour
         }
         active = true;
     }
+    #endregion
 }
 
 public class BlocToGen {

@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     public string RightKey = "d";
     public string backKey = "s";
 
+    [Header("Keys")]
+    public string interactionKey = "e";
+    public string turnKey = "r";
+
     Vector3 toGo = new Vector3();
 
 

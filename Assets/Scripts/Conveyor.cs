@@ -33,7 +33,7 @@ public class Conveyor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(direction < 2)
+        if(direction == 0 || direction == 2)
         {
             this.transform.GetChild(0).transform.rotation = Quaternion.Euler(0, 0, 0);
         } else
@@ -90,15 +90,15 @@ public class Conveyor : MonoBehaviour
                 Vector3 toGo = new Vector3();
                 if (direction == 0)
                 {
-                    toGo = this.transform.position + new Vector3(0.5f, 0.3f, 1-(1f / oresPerConveyor) * i);
+                    toGo = this.transform.position + new Vector3(0.5f, 0.3f, 1 - (1f / oresPerConveyor) * i);
                 } 
                 else if (direction == 1)
                 {
-                    toGo = this.transform.position + new Vector3(0.5f, 0.3f, (1f / oresPerConveyor) * i);
+                    toGo = this.transform.position + new Vector3(1 - (1f / oresPerConveyor) * i, 0.3f, 0.5f);
                 }
                 else if (direction == 2)
                 {
-                    toGo = this.transform.position + new Vector3(1-(1f / oresPerConveyor) * i, 0.3f, 0.5f);
+                    toGo = this.transform.position + new Vector3(0.5f, 0.3f, (1f / oresPerConveyor) * i);
                 }
                 else if (direction == 3)
                 {
@@ -117,22 +117,22 @@ public class Conveyor : MonoBehaviour
                     if (direction == 0)
                     {
                         obj = chunk.GetBlockAt(posX, posZ + 1);
-                        directionCanceled = 1;
+                        directionCanceled = 2;
                     }
                     else if (direction == 1)
-                    {
-                        obj = chunk.GetBlockAt(posX, posZ - 1);
-                        directionCanceled = 0;
-                    }
-                    else if (direction == 2)
                     {
                         obj = chunk.GetBlockAt(posX + 1, posZ);
                         directionCanceled = 3;
                     }
+                    else if (direction == 2)
+                    {
+                        obj = chunk.GetBlockAt(posX, posZ - 1);
+                        directionCanceled = 0;
+                    }
                     else if (direction == 3)
                     {
                         obj = chunk.GetBlockAt(posX - 1, posZ);
-                        directionCanceled = 2;
+                        directionCanceled = 1;
                     }
 
                     Conveyor NextConveyor = null;
@@ -203,17 +203,54 @@ public class Conveyor : MonoBehaviour
 
     public void GetOre(GameObject newOre, int pos)
     {
-        GameObject oreInstantiate = Instantiate(newOre, this.transform);
-        oreInstantiate.transform.position = newOre.transform.position;
-        ores[pos] = oreInstantiate;
+        if(ores[pos] == null)
+        {
+            GameObject oreInstantiate = Instantiate(newOre, this.transform);
+            oreInstantiate.transform.position = newOre.transform.position;
+            ores[pos] = oreInstantiate;
 
-        if (chunk.active)
+            if (chunk.active)
+            {
+                oreInstantiate.GetComponent<MeshRenderer>().enabled = true;
+            }
+            else
+            {
+                oreInstantiate.GetComponent<MeshRenderer>().enabled = false;
+            }
+        }
+    }
+    public void GetOre(GameObject newOre)
+    {
+        if (ores[oresPerConveyor - 1] == null)
         {
-            oreInstantiate.GetComponent<MeshRenderer>().enabled = true;
-        } 
-        else
-        {
-            oreInstantiate.GetComponent<MeshRenderer>().enabled = false;
+            GameObject oreInstantiate = Instantiate(newOre, this.transform);
+            ores[oresPerConveyor - 1] = oreInstantiate;
+
+            if (direction == 0)
+            {
+                oreInstantiate.transform.position = this.transform.position + new Vector3(0.5f, 0.3f, 0);
+            }
+            else if (direction == 1)
+            {
+                oreInstantiate.transform.position = this.transform.position + new Vector3(0, 0.3f, 0.5f);
+            }
+            else if (direction == 2)
+            {
+                oreInstantiate.transform.position = this.transform.position + new Vector3(0.5f, 0.3f, 1);
+            }
+            else if (direction == 3)
+            {
+                oreInstantiate.transform.position = this.transform.position + new Vector3(1, 0.3f, 0.5f);
+            }
+
+            if (chunk.active)
+            {
+                oreInstantiate.GetComponent<MeshRenderer>().enabled = true;
+            }
+            else
+            {
+                oreInstantiate.GetComponent<MeshRenderer>().enabled = false;
+            }
         }
     }
 }
