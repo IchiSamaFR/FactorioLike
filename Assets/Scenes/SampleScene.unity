@@ -2079,10 +2079,12 @@ MonoBehaviour:
     type: 3}
   viewDistance: 1
   levels:
-  - level: 0.8
+  - level: 0.6
     model: {fileID: 2182656972778883944, guid: 5c22782adf9309a4e9fd2b65008f98ee, type: 3}
   - level: 0.2
     model: {fileID: 3599625009248912242, guid: 2ff6d0774ce56fe4ab233dfbe508370c, type: 3}
+  - level: 0.2
+    model: {fileID: 7409563674065753395, guid: 698736229a642024daffa0fba01797da, type: 3}
   seed: 277
   player: {fileID: 363881608}
 --- !u!4 &74965082

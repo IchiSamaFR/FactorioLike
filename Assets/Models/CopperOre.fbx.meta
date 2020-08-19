@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: bea1ab4ceacb0144b9222d657d3b68e1
+guid: 5d991ffd932cbe34d900c1c65ac77772
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brown
+    second: {fileID: 2100000, guid: b3dfda799f786c948bc737a02f820709, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Copper
+    second: {fileID: 2100000, guid: f302e761c151771438e9219be2719784, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dirt
+    second: {fileID: 2100000, guid: e6993a63179bf50438b402392fade63b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: foliage
+    second: {fileID: 2100000, guid: b3c84945c6a2dbc4abb1be4102ef462b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 7874428f789f2f448be0b28408fa5784
+guid: e5af64884b06ff343aad7cf40bf09564
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grey
+    second: {fileID: 2100000, guid: d0822827b1246374cbe03e84edebcd94, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Iron
+    second: {fileID: 2100000, guid: 0e88189f6cf291a43a4b0e79e53fd250, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dirt
+    second: {fileID: 2100000, guid: e6993a63179bf50438b402392fade63b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: foliage
+    second: {fileID: 2100000, guid: b3c84945c6a2dbc4abb1be4102ef462b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
