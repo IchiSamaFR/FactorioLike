@@ -5,21 +5,19 @@ using UnityEngine;
 public class Conveyor : MonoBehaviour
 {
     Chunk chunk;
-    public GameObject[] ores = new GameObject[4];
+    public GameObject[] ores = new GameObject[0];
     public float speed = 2;
     public int oresPerConveyor = 4;
     public int posX;
     public int posZ;
 
     public sbyte direction = 0;
+    sbyte directionCanceled = 0;
+    Vector2 posToSend = new Vector2();
 
     public Conveyor(sbyte direction, int oresPerConveyor, Chunk chunk, int posX, int posZ)
     {
-        this.direction = direction;
-        this.oresPerConveyor = oresPerConveyor;
-        this.chunk = chunk;
-        this.posX = posX;
-        this.posZ = posZ;
+        Set(direction, oresPerConveyor, chunk, posX, posZ);
     }
     public void Set(sbyte direction, int oresPerConveyor, Chunk chunk, int posX, int posZ)
     {
@@ -28,7 +26,31 @@ public class Conveyor : MonoBehaviour
         this.chunk = chunk;
         this.posX = posX;
         this.posZ = posZ;
+
+        ores = new GameObject[oresPerConveyor];
+
+        if (direction == 0)
+        {
+            posToSend = new Vector2(posX, posZ + 1);
+            directionCanceled = 2;
+        }
+        else if (direction == 1)
+        {
+            posToSend = new Vector2(posX + 1, posZ);
+            directionCanceled = 3;
+        }
+        else if (direction == 2)
+        {
+            posToSend = new Vector2(posX, posZ - 1);
+            directionCanceled = 0;
+        }
+        else if (direction == 3)
+        {
+            posToSend = new Vector2(posX - 1, posZ);
+            directionCanceled = 1;
+        }
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +109,7 @@ public class Conveyor : MonoBehaviour
         {
             if (ore != null)
             {
+                //  Where to go by your placement
                 Vector3 toGo = new Vector3();
                 if (direction == 0)
                 {
@@ -105,35 +128,18 @@ public class Conveyor : MonoBehaviour
                     toGo = this.transform.position + new Vector3((1f / oresPerConveyor) * i, 0.3f, 0.5f);
                 }
 
+                //  This conveyor placement
                 if (i != 0 && ores[i - 1] == null && ores[i].transform.position == toGo)
                 {
                     ores[i - 1] = ores[i];
                     ores[i] = null;
-                } 
+                }
+
+                //  If ores is already to the less position check a conveyor or something else
                 else if (i == 0)
                 {
                     GameObject obj = null;
-                    sbyte directionCanceled = 0;
-                    if (direction == 0)
-                    {
-                        obj = chunk.GetBlockAt(posX, posZ + 1);
-                        directionCanceled = 2;
-                    }
-                    else if (direction == 1)
-                    {
-                        obj = chunk.GetBlockAt(posX + 1, posZ);
-                        directionCanceled = 3;
-                    }
-                    else if (direction == 2)
-                    {
-                        obj = chunk.GetBlockAt(posX, posZ - 1);
-                        directionCanceled = 0;
-                    }
-                    else if (direction == 3)
-                    {
-                        obj = chunk.GetBlockAt(posX - 1, posZ);
-                        directionCanceled = 1;
-                    }
+                    obj = chunk.GetBlockAt((int)posToSend.x, (int)posToSend.y);
 
                     Conveyor NextConveyor = null;
 
@@ -219,6 +225,7 @@ public class Conveyor : MonoBehaviour
             }
         }
     }
+
     public void GetOre(GameObject newOre)
     {
         if (ores[oresPerConveyor - 1] == null)

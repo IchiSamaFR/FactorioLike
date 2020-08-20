@@ -6,10 +6,10 @@ public class Block : MonoBehaviour
 {
     public int posX;
     public int posZ;
-    public string Type;
+    public int Type;
     public Chunk chunk;
 
-    public void Set(int posX, int posZ, string Type, Chunk chunk)
+    public void Set(int posX, int posZ, int Type, Chunk chunk)
     {
         this.posX = posX;
         this.posZ = posZ;

@@ -56,18 +56,10 @@ public class Cam : MonoBehaviour
                 //  Show the preshow build if there is a build selected
                 if (build.selected != null)
                 {
-                    if (preshowBuild)
-                    {
-                        preshowBuild.transform.position = hit.transform.position;
-                        preshowBuild.transform.position = hit.transform.position + new Vector3(0, 1, 0);
-                        preshowBuild.transform.GetChild(0).rotation = Quaternion.Euler(0, direction * 90, 0);
-                    } 
-                    else
-                    {
-                        preshowBuild = Instantiate(build.selected.shadowPrefab);
-                        preshowBuild.transform.position = hit.transform.position + new Vector3(0, 1, 0);
-                        preshowBuild.transform.GetChild(0).rotation = Quaternion.Euler(0, direction * 90, 0);
-                    }
+                    Destroy(preshowBuild);
+                    preshowBuild = Instantiate(build.selected.shadowPrefab);
+                    preshowBuild.transform.position = hit.transform.position + new Vector3(0, 1, 0);
+                    preshowBuild.transform.GetChild(0).rotation = Quaternion.Euler(0, direction * 90, 0);
                 } 
                 else if (preshowBuild)
                 {
@@ -79,25 +71,33 @@ public class Cam : MonoBehaviour
                 HitMarker.instance.Change(new Color(255, 255, 255));
             }
 
-            //  Mouvement de l'objet
-            if (Input.GetKey(interactionKey) && preshowBuild)
+            //  If there is a shadow then you could place the build
+            if (preshowBuild)
             {
-                if (hited.GetComponent<Block>())
+                if (Input.GetMouseButton(1) && hited.GetComponent<Block>())
                 {
                     Block hitedScript = hited.GetComponent<Block>();
-                    hitedScript.chunk.AddBuild(hitedScript.posX, hitedScript.posZ, build.selected.prefab, direction);
+                    if(!hitedScript.chunk.buildedBlocks[hitedScript.posX, hitedScript.posZ])
+                    {
+                        hitedScript.chunk.AddBuild(hitedScript.posX, hitedScript.posZ, build.selected.prefab, direction);
+                    }
                 }
             }
-            else if (Input.GetKey(interactionKey) && build.selected == null)
+
+            if (Input.GetMouseButton(0) && hited.GetComponent<Block>())
+            {
+                Block hitedScript = hited.GetComponent<Block>();
+                hitedScript.chunk.DestroyBuild(hitedScript.posX, hitedScript.posZ);
+            }
+
+            if (Input.GetKey(interactionKey))
             {
                 if (hited.GetComponent<Block>())
                 {
                     Block hitedScript = hited.GetComponent<Block>();
-                    print("block");
                     GameObject buildedBlock;
                     if (buildedBlock = hitedScript.chunk.buildedBlocks[hitedScript.posX, hitedScript.posZ])
                     {
-                        print("build");
                         if (buildedBlock.GetComponent<Conveyor>())
                         {
                             buildedBlock.GetComponent<Conveyor>().GetOre(Copper);

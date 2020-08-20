@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5378029626539024657}
   - component: {fileID: 5378029626539024656}
   m_Layer: 0
-  m_Name: Copper
+  m_Name: Iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c232a9891fb9bee4db10dc4bb12d3ea2, type: 2}
+  - {fileID: 2100000, guid: 9bc398307593e9849a1b9620fa6b1352, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

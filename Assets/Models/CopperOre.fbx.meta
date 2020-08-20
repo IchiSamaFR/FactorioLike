@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Brown
-    second: {fileID: 2100000, guid: b3dfda799f786c948bc737a02f820709, type: 2}
+      name: Copper1
+    second: {fileID: 2100000, guid: c232a9891fb9bee4db10dc4bb12d3ea2, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Copper
-    second: {fileID: 2100000, guid: f302e761c151771438e9219be2719784, type: 2}
+      name: Copper2
+    second: {fileID: 2100000, guid: b3dfda799f786c948bc737a02f820709, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

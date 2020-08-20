@@ -150,10 +150,25 @@ public class Chunk : MonoBehaviour
         {
             Destroy(buildedBlocks[x, z]);
         }
-        GameObject newConveyor = Instantiate(build, this.transform);
-        newConveyor.transform.position = this.transform.position + new Vector3(x, 1, z);
-        newConveyor.GetComponent<Conveyor>().Set(direction, 4, this, x, z);
-        buildedBlocks[x, z] = newConveyor;
+        GameObject newBuild = Instantiate(build, this.transform);
+        newBuild.transform.position = this.transform.position + new Vector3(x, 1, z);
+
+        if (newBuild.GetComponent<Conveyor>())
+        {
+            newBuild.GetComponent<Conveyor>().Set(direction, 4, this, x, z);
+        }
+        else if (newBuild.GetComponent<DrillingMachine>())
+        {
+            newBuild.GetComponent<DrillingMachine>().Set(direction, 4, this, x, z, groundBlocks[x,z].GetComponent<Block>().Type);
+        }
+        buildedBlocks[x, z] = newBuild;
+    }
+
+    public void DestroyBuild(int x, int z)
+    {
+        GameObject Save = buildedBlocks[x, z];
+        Destroy(Save);
+        buildedBlocks[x, z] = null;
     }
 
 
@@ -167,7 +182,7 @@ public class Chunk : MonoBehaviour
         {
             GameObject cube = Instantiate(levels[tile.id].model, this.transform);
             cube.transform.position = this.transform.position + new Vector3(tile.x, 0, tile.z);
-            cube.GetComponent<Block>().Set(tile.x, tile.z, tile.id.ToString(), this);
+            cube.GetComponent<Block>().Set(tile.x, tile.z, tile.id, this);
             groundBlocks[(int)tile.x, (int)tile.z] = cube;
         }
     }

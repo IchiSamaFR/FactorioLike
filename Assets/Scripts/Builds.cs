@@ -22,6 +22,10 @@ public class Builds : MonoBehaviour
         {
             Select(0);
         } 
+        else if (Input.GetKeyDown("2"))
+        {
+            Select(1);
+        }
         else if (Input.GetKeyDown("escape"))
         {
             Unselect();
@@ -30,6 +34,7 @@ public class Builds : MonoBehaviour
 
     void Select(int i)
     {
+        selected = null;
         selected = buildsAvailable[i];
     }
 
