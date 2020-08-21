@@ -49,7 +49,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 0.5
+  speed: 5
   oresPerConveyor: 4
   posX: 0
   posZ: 0

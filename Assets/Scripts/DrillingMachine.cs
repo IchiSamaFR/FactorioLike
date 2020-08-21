@@ -21,11 +21,11 @@ public class DrillingMachine : MonoBehaviour
     Vector2 posToSend = new Vector2();
 
 
-    public DrillingMachine(sbyte direction, int oresStockedMax, Chunk chunk, int posX, int posZ, int oreId)
+    public DrillingMachine(sbyte direction, int oresStockedMax, Chunk chunk, int posX, int posZ, string oreId)
     {
         Set(direction, oresStockedMax, chunk, posX, posZ, oreId);
     }
-    public void Set(sbyte direction, int oresStockedMax, Chunk chunk, int posX, int posZ, int oreId)
+    public void Set(sbyte direction, int oresStockedMax, Chunk chunk, int posX, int posZ, string oreId)
     {
         //  Set of all variable
         this.direction = direction;
@@ -34,7 +34,7 @@ public class DrillingMachine : MonoBehaviour
         this.posX = posX;
         this.posZ = posZ;
 
-        ore = Ores.instance.GetOre(oreId - 1);
+        ore = Ores.instance.GetOre(oreId);
         ores = new GameObject[oresStockedMax];
 
 

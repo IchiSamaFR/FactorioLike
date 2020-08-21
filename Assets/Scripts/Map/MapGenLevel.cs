@@ -6,5 +6,6 @@ using UnityEngine;
 public class MapGenLevel
 {
     public float level;
+    public string id;
     public GameObject model;
 }

@@ -13,7 +13,7 @@ public class Ores : MonoBehaviour
         instance = this;
     }
 
-    public Ore GetOre(int id)
+    public Ore GetOre(string id)
     {
         foreach(Ore ore in ores)
         {
@@ -22,7 +22,6 @@ public class Ores : MonoBehaviour
                 return ore;
             }
         }
-
         return null;
     }
 
@@ -35,7 +34,6 @@ public class Ores : MonoBehaviour
 [System.Serializable]
 public class Ore
 {
-    public int id;
-    public string name;
+    public string id;
     public GameObject prefab;
 }

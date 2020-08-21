@@ -6,7 +6,7 @@ public class Conveyor : MonoBehaviour
 {
     Chunk chunk;
     public GameObject[] ores = new GameObject[0];
-    public float speed = 2;
+    public float speed = 5;
     public int oresPerConveyor = 4;
     public int posX;
     public int posZ;
@@ -166,7 +166,6 @@ public class Conveyor : MonoBehaviour
 
                 }
 
-                
                 if (ore.transform.position.z > toGo.z)
                 {
                     ore.transform.position += new Vector3(0, 0, -Time.deltaTime * speed);
@@ -252,11 +251,11 @@ public class Conveyor : MonoBehaviour
 
             if (chunk.active)
             {
-                oreInstantiate.GetComponent<MeshRenderer>().enabled = true;
+                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
             }
             else
             {
-                oreInstantiate.GetComponent<MeshRenderer>().enabled = false;
+                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }

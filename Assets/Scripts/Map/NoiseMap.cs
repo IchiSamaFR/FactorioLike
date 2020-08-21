@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class NoiseMap
@@ -7,7 +8,7 @@ public static class NoiseMap
     public static List<BlocToGen> Create(int width, int length, float scale, int xPos, int zPos, int seed, List<MapGenLevel> levels)
     {
         List<BlocToGen> mapTiles = new List<BlocToGen>();
-        int[,] mapTilesId = new int[16, 16];
+        string[,] mapTilesId = new string[16, 16];
 
         float z = 0.0f;
         float newXPos = xPos * scale;
@@ -20,19 +21,20 @@ public static class NoiseMap
             float x = 0.0f;
             while (x < width)
             {
-                mapTilesId[(int)x, (int)z] = 0;
+                mapTilesId[(int)x, (int)z] = "grass";
 
                 x++;
             }
             z++;
         }
 
+        //  For each ore level, add it to the layer
         int i = 0;
         foreach (MapGenLevel level in levels)
         {
             if(i != 0)
             {
-                int[,] gen = GenLevel(width, length, scale, xPos, zPos, seed, 1 - level.level, i);
+                string[,] gen = GenLevel(width, length, scale, xPos, zPos, seed, 1 - level.level, level.id);
 
                 //  Already declared
                 z = 0.0f;
@@ -41,9 +43,9 @@ public static class NoiseMap
                     float x = 0.0f;
                     while (x < width)
                     {
-                        if(gen[(int)x, (int)z] > 0)
+                        if(gen[(int)x, (int)z] != null)
                         {
-                            mapTilesId[(int)x, (int)z] = i;
+                            mapTilesId[(int)x, (int)z] = level.id;
                         }
                         x++;
                     }
@@ -70,11 +72,12 @@ public static class NoiseMap
         return mapTiles;
     }
 
-    static int[,] GenLevel(int width, int length, float scale, int xPos, int zPos, int seed, float level, int id)
+    //  Generation of the layer level
+    static string[,] GenLevel(int width, int length, float scale, int xPos, int zPos, int seed, float level, string id)
     {
-        seed = (int)(seed * level * (id * 2f));
+        seed = (int)(seed * level * (id.Length * 2f));
 
-        int[,] mapTilesId = new int[16, 16];
+        string[,] mapTilesId = new string[16, 16];
 
         float z = 0.0f;
         float newXPos = xPos * scale;
@@ -85,11 +88,13 @@ public static class NoiseMap
             float x = 0.0f;
             while (x < width)
             {
+
+                //  Perlin Noise gen and add it if it's bigger than the level requiered
                 float xCoord = seed + newXPos + x / width * scale;
                 float zCoord = seed + newZPos + z / length * scale;
                 float yCoord = Mathf.PerlinNoise(xCoord, zCoord);
 
-                if(yCoord > level)
+                if (yCoord > level)
                 {
                     mapTilesId[(int)x, (int)z] = id;
                 }

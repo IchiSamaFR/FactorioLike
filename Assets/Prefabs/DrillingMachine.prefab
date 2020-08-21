@@ -65,10 +65,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ores: []
   ore:
-    id: 0
-    name: 
+    id: 
     prefab: {fileID: 0}
-  speed: 2
+  speed: 5
   oresStockedMax: 0
   posX: 0
   posZ: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UIElements;
@@ -154,7 +155,7 @@ public class Chunk : MonoBehaviour
             newBuild.GetComponent<Conveyor>().Set(direction, 4, this, x, z);
             buildedBlocks[x, z] = newBuild;
         }
-        else if (build.GetComponent<DrillingMachine>() && groundBlocks[x,z].GetComponent<Block>().Type > 0)
+        else if (build.GetComponent<DrillingMachine>() && groundBlocks[x,z].GetComponent<Block>().Type != "grass")
         {
             GameObject newBuild = Instantiate(build, this.transform);
             newBuild.transform.position = this.transform.position + new Vector3(x, 1, z);
@@ -182,13 +183,14 @@ public class Chunk : MonoBehaviour
 
         foreach (BlocToGen tile in mapBlocks)
         {
-            GameObject cube = Instantiate(levels[tile.id].model, this.transform);
+            GameObject cube = Instantiate(Tools.GetMapGenLev(levels, tile.id).model, this.transform);
             cube.transform.position = this.transform.position + new Vector3(tile.x, 0, tile.z);
             cube.GetComponent<Block>().Set(tile.x, tile.z, tile.id, this);
             groundBlocks[(int)tile.x, (int)tile.z] = cube;
         }
         
     }
+    /*
     public IEnumerator IE_SpeedMapGen()
     {
         float time = 2;
@@ -219,7 +221,7 @@ public class Chunk : MonoBehaviour
                 yield return new WaitForSeconds(percentTime - percentBuild * time);
             }
         }
-    }
+    }*/
 
 
 
@@ -252,11 +254,11 @@ public class Chunk : MonoBehaviour
 }
 
 public class BlocToGen {
-    public int id;
+    public string id;
     public int x;
     public int z;
 
-    public BlocToGen(int id, int x, int z)
+    public BlocToGen(string id, int x, int z)
     {
         this.id = id;
         this.x = x;
