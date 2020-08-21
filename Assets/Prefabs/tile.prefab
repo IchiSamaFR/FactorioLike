@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posX: 0
   posZ: 0
-  Type: 
+  Type: 0
   chunk: {fileID: 0}
 --- !u!1001 &2479282944455698691
 PrefabInstance:
@@ -132,7 +132,17 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1c49f86b0cbfb6f4db140da5f8145596,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1c49f86b0cbfb6f4db140da5f8145596,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1c49f86b0cbfb6f4db140da5f8145596,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c49f86b0cbfb6f4db140da5f8145596, type: 3}

@@ -155,15 +155,15 @@ MonoBehaviour:
   scale: 0.5
   chunkPrefab: {fileID: 3519595100453013289, guid: db301756f588cfb449e4850d1be3513b,
     type: 3}
-  viewDistance: 1
+  viewDistance: 3
   levels:
-  - level: 0.6
+  - level: 0
     model: {fileID: 2182656972778883944, guid: 5c22782adf9309a4e9fd2b65008f98ee, type: 3}
-  - level: 0.2
+  - level: 0.3
     model: {fileID: 3599625009248912242, guid: 2ff6d0774ce56fe4ab233dfbe508370c, type: 3}
-  - level: 0.2
+  - level: 0.3
     model: {fileID: 7409563674065753395, guid: 698736229a642024daffa0fba01797da, type: 3}
-  seed: 277
+  seed: 303
   player: {fileID: 363881608}
 --- !u!4 &74965082
 Transform:
