@@ -29,6 +29,14 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         toGo = this.transform.position;
+        StartCoroutine("set");
+    }
+
+    IEnumerator set()
+    {
+        this.GetComponent<Rigidbody>().useGravity = false;
+        yield return new WaitForSeconds(2);
+        this.GetComponent<Rigidbody>().useGravity = true;
     }
 
     // Update is called once per frame

@@ -217,11 +217,11 @@ public class Conveyor : MonoBehaviour
 
             if (chunk.active)
             {
-                oreInstantiate.GetComponent<MeshRenderer>().enabled = true;
+                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
             }
             else
             {
-                oreInstantiate.GetComponent<MeshRenderer>().enabled = false;
+                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }

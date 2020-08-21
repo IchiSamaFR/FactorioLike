@@ -87,28 +87,74 @@ public class DrillingMachine : MonoBehaviour
     }
     void Update()
     {
-        if(timer > 0)
+        CreateOre();
+        Eject();
+    }
+
+    void CreateOre()
+    {
+        if (timer > 0)
         {
             timer -= Time.deltaTime;
-        } else if (Tools.Count(ores) != oresStockedMax)
+        }
+        else if (Tools.Count(ores) != oresStockedMax)
         {
             AddOre();
             timer = speed;
         }
-        Eject();
     }
 
     void AddOre()
     {
         GameObject obj = Instantiate(ore.prefab, this.transform);
-        ores[Tools.Count(ores)] = obj;
-        obj.transform.position = this.transform.position;
+        int pos = Tools.Count(ores);
+        ores[pos] = obj;
+        CheckPos();
     }
 
-        // Update is called once per frame
+    void CheckPos()
+    {
+        int pos = 0;
+        foreach(GameObject ore in ores)
+        {
+            if(ore != null)
+            {
+                float corrector = 0;
+                if (pos % 2 == 0)
+                {
+                    corrector = 0.2f;
+                }
+
+                Vector3 posToGet = new Vector3();
+                if (direction == 0)
+                {
+                    posToGet = this.transform.position + new Vector3(0.4f + corrector, (int)((pos - 1) / 2) * 0.2f, 0.9f);
+                } 
+                else if (direction == 1)
+                {
+                    posToGet = this.transform.position + new Vector3(0.9f, (int)((pos - 1) / 2) * 0.2f, 0.4f + corrector);
+                }
+                else if (direction == 2)
+                {
+                    posToGet = this.transform.position + new Vector3(0.6f - corrector, (int)((pos - 1) / 2) * 0.2f, 0.1f);
+                }
+                else if (direction == 3)
+                {
+                    posToGet = this.transform.position + new Vector3(0.1f, (int)((pos - 1) / 2) * 0.2f, 0.6f - corrector);
+                }
+                if (ore.transform.position != posToGet)
+                {
+                    ore.transform.position = posToGet;
+                }
+            }
+            pos++;
+        }
+    }
+
     void Eject()
     {
         int i = 0;
+        bool eject = false;
         foreach(GameObject ore in ores)
         {
             if(ore != null)
@@ -117,6 +163,7 @@ public class DrillingMachine : MonoBehaviour
                 {
                     ores[i - 1] = ores[i];
                     ores[i] = null;
+                    eject = true;
                 }
                 else if (i == 0)
                 {
@@ -136,6 +183,7 @@ public class DrillingMachine : MonoBehaviour
                                 NextConveyor.GetOre(ores[0], (int)(NextConveyor.ores.Length / 2));
                                 GameObject toDelete = ores[0];
                                 ores[0] = null;
+                                eject = true;
                                 Destroy(toDelete);
                             }
                             else if (NextConveyor.direction == direction && NextConveyor.ores[NextConveyor.ores.Length - 1] == null)
@@ -143,6 +191,7 @@ public class DrillingMachine : MonoBehaviour
                                 NextConveyor.GetOre(ores[0], NextConveyor.ores.Length - 1);
                                 GameObject toDelete = ores[0];
                                 ores[0] = null;
+                                eject = true;
                                 Destroy(toDelete);
                             }
                         }
@@ -150,6 +199,11 @@ public class DrillingMachine : MonoBehaviour
                 }
             }
             i++;
+        }
+
+        if (eject)
+        {
+            CheckPos();
         }
     }
 }
