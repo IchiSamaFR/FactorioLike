@@ -6,15 +6,13 @@ public class Cam : MonoBehaviour
 {
     public GameObject Copper;
     public PlayerMovement playerMovement;
-    GameObject hitObject;
 
     string interactionKey;
     string turnKey;
 
 
     [Header("Build")]
-    Builds build;
-    GameObject preshowBuild;
+    Builder builder;
 
     sbyte direction = 0;
 
@@ -23,7 +21,7 @@ public class Cam : MonoBehaviour
     {
         interactionKey = playerMovement.interactionKey;
         turnKey = playerMovement.turnKey;
-        build = Builds.instance;
+        builder = Builder.instance;
     }
 
     // Update is called once per frame
@@ -48,68 +46,46 @@ public class Cam : MonoBehaviour
         {
             GameObject hited = hit.transform.gameObject;
 
-            //  If is hitted
-            if (hited.tag == "GroundTile" || hitObject != null)
+            if (hited.GetComponent<Block>())
             {
-                HitMarker.instance.Change(new Color(180, 0, 0));
+                if (hited.tag == "GroundTile")
+                {
+                    HitMarker.instance.Change(new Color(180, 0, 0));
 
-                //  Show the preshow build if there is a build selected
-                if (build.selected != null)
-                {
-                    Destroy(preshowBuild);
-                    preshowBuild = Instantiate(build.selected.shadowPrefab);
-                    preshowBuild.transform.position = hit.transform.position + new Vector3(0, 1, 0);
-                    preshowBuild.transform.GetChild(0).rotation = Quaternion.Euler(0, direction * 90, 0);
-                } 
-                else if (preshowBuild)
-                {
-                    Destroy(preshowBuild);
+                    builder.Preshow(hited, direction);
                 }
-            } 
-            else
-            {
-                HitMarker.instance.Change(new Color(255, 255, 255));
-            }
-
-            //  If there is a shadow then you could place the build
-            if (preshowBuild)
-            {
-                if (Input.GetMouseButton(1) && hited.GetComponent<Block>())
+                else
                 {
-                    Block hitedScript = hited.GetComponent<Block>();
-                    if(!hitedScript.chunk.buildedBlocks[hitedScript.posX, hitedScript.posZ])
-                    {
-                        hitedScript.chunk.AddBuild(hitedScript.posX, hitedScript.posZ, build.selected.prefab, direction);
-                    }
+                    HitMarker.instance.Change(new Color(255, 255, 255));
                 }
-            }
 
-            if (Input.GetMouseButton(0) && hited.GetComponent<Block>())
-            {
-                Block hitedScript = hited.GetComponent<Block>();
-                hitedScript.chunk.DestroyBuild(hitedScript.posX, hitedScript.posZ);
-            }
-
-            if (Input.GetKey(interactionKey))
-            {
-                if (hited.GetComponent<Block>())
+                if (Input.GetMouseButton(1))
                 {
-                    Block hitedScript = hited.GetComponent<Block>();
-                    GameObject buildedBlock;
-                    if (buildedBlock = hitedScript.chunk.buildedBlocks[hitedScript.posX, hitedScript.posZ])
+                    builder.Build(hited, direction);
+                }
+
+                /*
+                if (Input.GetKey(interactionKey))
+                {
+                    if (hited.GetComponent<Block>())
                     {
-                        if (buildedBlock.GetComponent<Conveyor>())
+                        Block hitedScript = hited.GetComponent<Block>();
+                        GameObject buildedBlock;
+                        if (buildedBlock = hitedScript.chunk.buildedBlocks[hitedScript.posX, hitedScript.posZ])
                         {
-                            buildedBlock.GetComponent<Conveyor>().GetOre(Copper);
+                            if (buildedBlock.GetComponent<Conveyor>())
+                            {
+                                buildedBlock.GetComponent<Conveyor>().GetOre(Copper);
+                            }
                         }
                     }
-                }
+                }*/
             }
         }
         else
         {
             HitMarker.instance.Change(new Color(255, 255, 255));
-            Destroy(preshowBuild);
+            builder.StopPreshowBuild();
         }
     }
 }

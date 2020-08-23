@@ -7,7 +7,7 @@ public class DrillingMachine : MonoBehaviour
 {
     Chunk chunk;
     public GameObject[] ores = new GameObject[0];
-    public Ore ore;
+    public Item item;
 
     public float speed = 2;
     float timer;
@@ -34,7 +34,12 @@ public class DrillingMachine : MonoBehaviour
         this.posX = posX;
         this.posZ = posZ;
 
-        ore = Ores.instance.GetOre(oreId);
+        item = Items.instance.GetOreByTile(oreId);
+        if(item == null)
+        {
+            Debug.Log("L'id du bloc n'est pas reconnu");
+            speed = 0;
+        }
         ores = new GameObject[oresStockedMax];
 
 
@@ -106,7 +111,7 @@ public class DrillingMachine : MonoBehaviour
 
     void AddOre()
     {
-        GameObject obj = Instantiate(ore.prefab, this.transform);
+        GameObject obj = Instantiate(item.prefab, this.transform);
         int pos = Tools.Count(ores);
         ores[pos] = obj;
         CheckPos();
@@ -167,28 +172,29 @@ public class DrillingMachine : MonoBehaviour
                 }
                 else if (i == 0)
                 {
-                    GameObject obj = null;
-                    obj = chunk.GetBlockAt((int)posToSend.x, (int)posToSend.y);
+                    GameObject buildToDrop = null;
+                    buildToDrop = chunk.GetBlockAt((int)posToSend.x, (int)posToSend.y);
 
 
-                    Conveyor NextConveyor = null;
 
-                    if (obj != null && obj.GetComponent<Conveyor>())
+                    if (buildToDrop != null && buildToDrop.GetComponent<Conveyor>())
                     {
-                        NextConveyor = obj.GetComponent<Conveyor>();
-                        if (obj && NextConveyor.direction != directionCanceled)
+                        Conveyor nextConveyor = null;
+                        nextConveyor = buildToDrop.GetComponent<Conveyor>();
+
+                        if (buildToDrop && nextConveyor.direction != directionCanceled)
                         {
-                            if (NextConveyor.direction != direction && NextConveyor.ores[(int)(NextConveyor.ores.Length / 2)] == null)
+                            if (nextConveyor.direction != direction && nextConveyor.ores[(int)(nextConveyor.ores.Length / 2)] == null)
                             {
-                                NextConveyor.GetOre(ores[0], (int)(NextConveyor.ores.Length / 2));
+                                nextConveyor.GetOre(ores[0], (int)(nextConveyor.ores.Length / 2));
                                 GameObject toDelete = ores[0];
                                 ores[0] = null;
                                 eject = true;
                                 Destroy(toDelete);
                             }
-                            else if (NextConveyor.direction == direction && NextConveyor.ores[NextConveyor.ores.Length - 1] == null)
+                            else if (nextConveyor.direction == direction && nextConveyor.ores[nextConveyor.ores.Length - 1] == null)
                             {
-                                NextConveyor.GetOre(ores[0], NextConveyor.ores.Length - 1);
+                                nextConveyor.GetOre(ores[0], nextConveyor.ores.Length - 1);
                                 GameObject toDelete = ores[0];
                                 ores[0] = null;
                                 eject = true;

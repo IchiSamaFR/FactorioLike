@@ -155,16 +155,16 @@ MonoBehaviour:
   scale: 0.5
   chunkPrefab: {fileID: 3519595100453013289, guid: db301756f588cfb449e4850d1be3513b,
     type: 3}
-  viewDistance: 3
+  viewDistance: 1
   levels:
   - level: 0
-    id: grass
+    id: tile_grass
     model: {fileID: 2182656972778883944, guid: 5c22782adf9309a4e9fd2b65008f98ee, type: 3}
-  - level: 0.2
-    id: iron
+  - level: 0.3
+    id: tile_iron
     model: {fileID: 3599625009248912242, guid: 2ff6d0774ce56fe4ab233dfbe508370c, type: 3}
-  - level: 0.2
-    id: copper
+  - level: 0.3
+    id: tile_copper
     model: {fileID: 7409563674065753395, guid: 698736229a642024daffa0fba01797da, type: 3}
   seed: 303
   player: {fileID: 363881608}
@@ -317,7 +317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 363881608}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 66, y: -0.54999995, z: -20}
+  m_LocalPosition: {x: -10, y: -0.54999995, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 931425723}
@@ -787,7 +787,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2605256, y: -0, z: -0, w: 0.965467}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0.3}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 931425723}
@@ -872,6 +872,7 @@ MonoBehaviour:
     name: 
     prefab: {fileID: 0}
     shadowPrefab: {fileID: 0}
+  preshowBuild: {fileID: 0}
 --- !u!114 &1429042036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,12 +885,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43256dedf087a441957cb974625a7c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ores:
-  - id: iron
-    prefab: {fileID: 5378029626539024663, guid: 7e298269f9a8cd94ebb3af09184b32a1,
-      type: 3}
-  - id: copper
+  items:
+  - id: copper_ore
+    type: ore
     prefab: {fileID: 5378029626539024663, guid: 7ec5839d91e7ab74192469c4286246d1,
+      type: 3}
+  - id: iron_ore
+    type: ore
+    prefab: {fileID: 5378029626539024663, guid: 7e298269f9a8cd94ebb3af09184b32a1,
       type: 3}
 --- !u!1 &1918339894
 GameObject:
@@ -926,7 +929,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1918339896
 MonoBehaviour:
