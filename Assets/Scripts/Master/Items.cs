@@ -5,7 +5,7 @@ using UnityEngine;
 public class Items : MonoBehaviour
 {
     public static Items instance;
-    public List<Item> items = new List<Item>();
+    public List<GameObject> items = new List<GameObject>();
 
 
     void Awake()
@@ -13,7 +13,7 @@ public class Items : MonoBehaviour
         instance = this;
     }
 
-    public Item GetOreByTile(string id)
+    public GameObject GetOreByTile(string id)
     {
         string idToGet = "";
         if (id == "iron_ore")
@@ -25,9 +25,9 @@ public class Items : MonoBehaviour
             idToGet = "copper_ore";
         }
 
-        foreach(Item ore in items)
+        foreach(GameObject ore in items)
         {
-            if(ore.id == idToGet)
+            if(ore.GetComponent<Item>().id == idToGet)
             {
                 return ore;
             }
@@ -36,11 +36,3 @@ public class Items : MonoBehaviour
     }
 }
 
-
-[System.Serializable]
-public class Item
-{
-    public string id;
-    public string type;
-    public GameObject prefab;
-}

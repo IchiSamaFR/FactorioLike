@@ -58,7 +58,6 @@ public class Builder : MonoBehaviour
 
         if (!chunk.buildedBlocks[x, z])
         {
-            print("tetst");
             if (selected.prefab.GetComponent<Conveyor>())
             {
                 GameObject newBuild = Instantiate(selected.prefab, chunk.transform);

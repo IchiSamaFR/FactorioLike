@@ -21,7 +21,7 @@ public static class NoiseMap
             float x = 0.0f;
             while (x < width)
             {
-                mapTilesId[(int)x, (int)z] = "grass";
+                mapTilesId[(int)x, (int)z] = levels[0].id;
 
                 x++;
             }

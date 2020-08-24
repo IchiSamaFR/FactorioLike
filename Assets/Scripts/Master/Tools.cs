@@ -17,7 +17,6 @@ public static class Tools
 
     public static MapGenLevel GetMapGenLev(List<MapGenLevel> list, string id)
     {
-        int x = 0;
         foreach (MapGenLevel obj in list)
         {
             if (obj.id == id)

@@ -7,7 +7,7 @@ public class DrillingMachine : MonoBehaviour
 {
     Chunk chunk;
     public GameObject[] ores = new GameObject[0];
-    public Item item;
+    public GameObject item;
 
     public float speed = 2;
     float timer;
@@ -71,24 +71,6 @@ public class DrillingMachine : MonoBehaviour
     void Start()
     {
         timer = speed;
-
-
-        if (direction == 0)
-        {
-            this.transform.GetChild(0).transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (direction == 1)
-        {
-            this.transform.GetChild(0).transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else if (direction == 2)
-        {
-            this.transform.GetChild(0).transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        else if (direction == 3)
-        {
-            this.transform.GetChild(0).transform.rotation = Quaternion.Euler(0, 270, 0);
-        }
     }
     void Update()
     {
@@ -111,13 +93,13 @@ public class DrillingMachine : MonoBehaviour
 
     void AddOre()
     {
-        GameObject obj = Instantiate(item.prefab, this.transform);
+        GameObject obj = Instantiate(item, this.transform);
         int pos = Tools.Count(ores);
         ores[pos] = obj;
-        CheckPos();
+        ChangeItemsPos();
     }
 
-    void CheckPos()
+    void ChangeItemsPos()
     {
         int pos = 0;
         foreach(GameObject ore in ores)
@@ -184,17 +166,17 @@ public class DrillingMachine : MonoBehaviour
 
                         if (buildToDrop && nextConveyor.direction != directionCanceled)
                         {
-                            if (nextConveyor.direction != direction && nextConveyor.ores[(int)(nextConveyor.ores.Length / 2)] == null)
+                            if (nextConveyor.direction != direction && nextConveyor.itemsToEject[(int)(nextConveyor.itemsToEject.Length / 2)] == null)
                             {
-                                nextConveyor.GetOre(ores[0], (int)(nextConveyor.ores.Length / 2));
+                                nextConveyor.GetItem(ores[0], (int)(nextConveyor.itemsToEject.Length / 2));
                                 GameObject toDelete = ores[0];
                                 ores[0] = null;
                                 eject = true;
                                 Destroy(toDelete);
                             }
-                            else if (nextConveyor.direction == direction && nextConveyor.ores[nextConveyor.ores.Length - 1] == null)
+                            else if (nextConveyor.direction == direction && nextConveyor.itemsToEject[nextConveyor.itemsToEject.Length - 1] == null)
                             {
-                                nextConveyor.GetOre(ores[0], nextConveyor.ores.Length - 1);
+                                nextConveyor.GetItem(ores[0], nextConveyor.itemsToEject.Length - 1);
                                 GameObject toDelete = ores[0];
                                 ores[0] = null;
                                 eject = true;
@@ -209,7 +191,7 @@ public class DrillingMachine : MonoBehaviour
 
         if (eject)
         {
-            CheckPos();
+            ChangeItemsPos();
         }
     }
 }

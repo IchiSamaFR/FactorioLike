@@ -44,16 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27d21a0c90daa147a383284975b0559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ores:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  speed: 5
-  oresPerConveyor: 4
+  chunk: {fileID: 0}
+  itemsToEject: []
+  speed: 3
+  itemsStockedMax: 4
   posX: 0
   posZ: 0
   direction: 0
+  directionCanceled: 0
 --- !u!1001 &6390562161406150853
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -27,6 +27,17 @@ public class Cam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown("a"))
+        {
+            if (Time.timeScale == 0.1f)
+            {
+                Time.timeScale = 1f;
+            } else
+            {
+                Time.timeScale = 0.1f;
+            }
+        }
         Check();
 
         if (Input.GetKeyDown(turnKey))
@@ -63,9 +74,13 @@ public class Cam : MonoBehaviour
                 {
                     builder.Build(hited, direction);
                 }
+                else if (Input.GetMouseButton(0))
+                {
+                    builder.DestroyBuild(hited);
+                }
 
-                /*
-                if (Input.GetKey(interactionKey))
+                
+                if (Input.GetKeyDown(interactionKey))
                 {
                     if (hited.GetComponent<Block>())
                     {
@@ -75,11 +90,11 @@ public class Cam : MonoBehaviour
                         {
                             if (buildedBlock.GetComponent<Conveyor>())
                             {
-                                buildedBlock.GetComponent<Conveyor>().GetOre(Copper);
+                                buildedBlock.GetComponent<Conveyor>().GetItem(Copper);
                             }
                         }
                     }
-                }*/
+                }
             }
         }
         else
