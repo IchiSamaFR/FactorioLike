@@ -59,22 +59,31 @@ public class Building : MonoBehaviour
     {
         if (itemsToEject[0] != null)
         {
-            GameObject buildToDrop = null;
-            if ((buildToDrop = chunk.GetBlockAt((int)posToEject.x, (int)posToEject.y)))
+            GameObject obj_buildToDrop = null;
+            if ((obj_buildToDrop = chunk.GetBlockAt((int)posToEject.x, (int)posToEject.y)))
             {
-                Building nextConveyor = null;
-                if((nextConveyor = buildToDrop.GetComponent<Building>()) && nextConveyor.direction != directionCanceled)
+                Building buildToDrop = null;
+                if((buildToDrop = obj_buildToDrop.GetComponent<Building>()) && buildToDrop.direction != directionCanceled)
                 {
-                    if (nextConveyor.direction != direction && nextConveyor.itemsToEject[(int)(nextConveyor.itemsToEject.Length / 2)] == null)
+                    if (obj_buildToDrop.GetComponent<Conveyor>())
                     {
-                        nextConveyor.GetItem(itemsToEject[0], (int)(nextConveyor.itemsToEject.Length / 2));
-                        GameObject toDelete = itemsToEject[0];
-                        itemsToEject[0] = null;
-                        Destroy(toDelete);
-                    }
-                    else if (nextConveyor.direction == direction && nextConveyor.itemsToEject[nextConveyor.itemsToEject.Length - 1] == null)
+                        if (buildToDrop.direction != direction
+                           && buildToDrop.GetItem(itemsToEject[0], (int)(buildToDrop.itemsToEject.Length / 2)))
+                        {
+                            GameObject toDelete = itemsToEject[0];
+                            itemsToEject[0] = null;
+                            Destroy(toDelete);
+                        }
+                        else if (buildToDrop.direction == direction
+                            && buildToDrop.GetItem(itemsToEject[0], buildToDrop.itemsToEject.Length - 1))
+                        {
+                            GameObject toDelete = itemsToEject[0];
+                            itemsToEject[0] = null;
+                            Destroy(toDelete);
+                        }
+                    } 
+                    else if (buildToDrop.GetItem(itemsToEject[0], buildToDrop.itemsToEject.Length - 1))
                     {
-                        nextConveyor.GetItem(itemsToEject[0], nextConveyor.itemsToEject.Length - 1);
                         GameObject toDelete = itemsToEject[0];
                         itemsToEject[0] = null;
                         Destroy(toDelete);

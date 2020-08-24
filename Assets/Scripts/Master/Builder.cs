@@ -58,18 +58,18 @@ public class Builder : MonoBehaviour
 
         if (!chunk.buildedBlocks[x, z])
         {
-            if (selected.prefab.GetComponent<Conveyor>())
+            GameObject newBuild = Instantiate(selected.prefab, chunk.transform);
+            newBuild.transform.position = chunk.transform.position + new Vector3(x, 1, z);
+            newBuild.GetComponent<Building>().Set(direction, 4, chunk, x, z);
+
+
+            chunk.buildedBlocks[x, z] = newBuild;
+
+            if (selected.prefab.GetComponent<DrillingMachine>() && chunk.groundBlocks[x, z].GetComponent<Block>().Type != "grass")
             {
-                GameObject newBuild = Instantiate(selected.prefab, chunk.transform);
                 newBuild.transform.position = chunk.transform.position + new Vector3(x, 1, z);
-                newBuild.GetComponent<Conveyor>().Set(direction, 4, chunk, x, z);
-                chunk.buildedBlocks[x, z] = newBuild;
-            }
-            else if (selected.prefab.GetComponent<DrillingMachine>() && chunk.groundBlocks[x, z].GetComponent<Block>().Type != "grass")
-            {
-                GameObject newBuild = Instantiate(selected.prefab, chunk.transform);
-                newBuild.transform.position = chunk.transform.position + new Vector3(x, 1, z);
-                newBuild.GetComponent<DrillingMachine>().Set(direction, 4, chunk, x, z, chunk.groundBlocks[x, z].GetComponent<Block>().Type);
+                newBuild.GetComponent<Building>().Set(direction, 4, chunk, x, z);
+                newBuild.GetComponent<DrillingMachine>().AddItemToProduce(chunk.groundBlocks[x, z].GetComponent<Block>().Type);
                 chunk.buildedBlocks[x, z] = newBuild;
             }
             //block.chunk.AddBuild(block.posX, block.posZ, selected.prefab, direction);

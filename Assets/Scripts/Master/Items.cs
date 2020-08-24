@@ -16,11 +16,11 @@ public class Items : MonoBehaviour
     public GameObject GetOreByTile(string id)
     {
         string idToGet = "";
-        if (id == "iron_ore")
+        if (id == "iron_tile")
         {
-            idToGet = "";
+            idToGet = "iron_ore";
         } 
-        else if (id == "tile_copper")
+        else if (id == "copper_tile")
         {
             idToGet = "copper_ore";
         }

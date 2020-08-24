@@ -145,25 +145,6 @@ public class Chunk : MonoBehaviour
         return null;
     }
 
-    public void AddBuild(int x, int z, GameObject build, sbyte direction)
-    {
-
-        if (build.GetComponent<Conveyor>())
-        {
-            GameObject newBuild = Instantiate(build, this.transform);
-            newBuild.transform.position = this.transform.position + new Vector3(x, 1, z);
-            newBuild.GetComponent<Conveyor>().Set(direction, 4, this, x, z);
-            buildedBlocks[x, z] = newBuild;
-        }
-        else if (build.GetComponent<DrillingMachine>() && groundBlocks[x,z].GetComponent<Block>().Type != "grass")
-        {
-            GameObject newBuild = Instantiate(build, this.transform);
-            newBuild.transform.position = this.transform.position + new Vector3(x, 1, z);
-            newBuild.GetComponent<DrillingMachine>().Set(direction, 4, this, x, z, groundBlocks[x,z].GetComponent<Block>().Type);
-            buildedBlocks[x, z] = newBuild;
-        }
-    }
-
     public void DestroyBuild(int x, int z)
     {
         GameObject Save = buildedBlocks[x, z];
