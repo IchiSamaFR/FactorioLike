@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Conveyor : Building
 {
-    Vector2 posToSend = new Vector2();
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     void Update()
     {

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e5af64884b06ff343aad7cf40bf09564
+guid: 8079a47710d063e4db13c43dc71c0be4
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
@@ -14,11 +14,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Iron2
     second: {fileID: 2100000, guid: d0822827b1246374cbe03e84edebcd94, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Stone1
-    second: {fileID: 2100000, guid: 3ef421d02759c174eb4cc4e5a18d27b5, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

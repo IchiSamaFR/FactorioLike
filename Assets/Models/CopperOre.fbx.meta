@@ -17,6 +17,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Stone1
+    second: {fileID: 2100000, guid: 3ef421d02759c174eb4cc4e5a18d27b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: dirt
     second: {fileID: 2100000, guid: e6993a63179bf50438b402392fade63b, type: 2}
   - first:

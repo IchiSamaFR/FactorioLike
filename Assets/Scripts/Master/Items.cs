@@ -27,9 +27,31 @@ public class Items : MonoBehaviour
 
         foreach(GameObject ore in items)
         {
-            if(ore.GetComponent<Item>().id == idToGet)
+            if (!ore.GetComponent<Item>())
+            {
+                Debug.Log("An item don't have class.");
+                return null;
+            }
+            else if(ore.GetComponent<Item>().id == idToGet)
             {
                 return ore;
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetItem(string id)
+    {
+        foreach (GameObject item in items)
+        {
+            if (!item.GetComponent<Item>())
+            {
+                Debug.Log("An item don't have class.");
+                return null;
+            }
+            else if (item.GetComponent<Item>().id == id)
+            {
+                return item;
             }
         }
         return null;

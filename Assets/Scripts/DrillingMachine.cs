@@ -8,7 +8,6 @@ public class DrillingMachine : Building
     public GameObject itemProduce;
 
     float timer;
-    Vector2 posToSend = new Vector2();
 
 
     public void AddItemToProduce(string oreId)
@@ -37,12 +36,11 @@ public class DrillingMachine : Building
     {
         if(speed > 0)
         {
-            print(Tools.Count(itemsToEject));
             if (timer > 0)
             {
                 timer -= Time.deltaTime;
             }
-            else if (Tools.Count(itemsToEject) != itemsStockedMax)
+            else if (itemsToEject[itemsStockedMax -1] == null)
             {
                 AddOre();
                 timer = speed;
@@ -53,8 +51,7 @@ public class DrillingMachine : Building
     void AddOre()
     {
         GameObject obj = Instantiate(itemProduce, this.transform);
-        int pos = Tools.Count(itemsToEject);
-        itemsToEject[pos] = obj;
+        itemsToEject[itemsStockedMax - 1] = obj;
         ChangeItemsPos();
     }
 
@@ -94,8 +91,6 @@ public class DrillingMachine : Building
                 {
                     posToGet = this.transform.position + new Vector3(0.1f, (int)(pos / 2) * 0.2f, 0.6f - corrector);
                 }
-
-                print(pos + " " + posToGet);
 
                 if (item.transform.position != posToGet)
                 {

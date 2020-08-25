@@ -15,7 +15,7 @@ public class Building : MonoBehaviour
 
     public sbyte direction = 0;
     public sbyte directionCanceled = 0;
-    Vector2 posToEject = new Vector2();
+    public Vector2 posToEject = new Vector2();
 
     public void Set(sbyte direction, int itemsStockedMax, Chunk chunk, int posX, int posZ)
     {
@@ -67,22 +67,29 @@ public class Building : MonoBehaviour
                 {
                     if (obj_buildToDrop.GetComponent<Conveyor>())
                     {
-                        if (buildToDrop.direction != direction
-                           && buildToDrop.GetItem(itemsToEject[0], (int)(buildToDrop.itemsToEject.Length / 2)))
+                        if (buildToDrop.GetItem(itemsToEject[0], (int)(buildToDrop.itemsToEject.Length / 2)))
                         {
                             GameObject toDelete = itemsToEject[0];
                             itemsToEject[0] = null;
                             Destroy(toDelete);
                         }
-                        else if (buildToDrop.direction == direction
-                            && buildToDrop.GetItem(itemsToEject[0], buildToDrop.itemsToEject.Length - 1))
+                        else if (buildToDrop.GetItem(itemsToEject[0]))
                         {
                             GameObject toDelete = itemsToEject[0];
                             itemsToEject[0] = null;
                             Destroy(toDelete);
                         }
                     } 
-                    else if (buildToDrop.GetItem(itemsToEject[0], buildToDrop.itemsToEject.Length - 1))
+                    else if (obj_buildToDrop.GetComponent<Smeltery>())
+                    {
+                        if (buildToDrop.GetComponent<Smeltery>().GetItem(itemsToEject[0]))
+                        {
+                            GameObject toDelete = itemsToEject[0];
+                            itemsToEject[0] = null;
+                            Destroy(toDelete);
+                        }
+                    }
+                    else if (buildToDrop.GetItem(itemsToEject[0]))
                     {
                         GameObject toDelete = itemsToEject[0];
                         itemsToEject[0] = null;

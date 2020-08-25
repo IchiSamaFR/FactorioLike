@@ -23,10 +23,14 @@ public class Builder : MonoBehaviour
         if (Input.GetKeyDown("1"))
         {
             Select(0);
-        } 
+        }
         else if (Input.GetKeyDown("2"))
         {
             Select(1);
+        }
+        else if (Input.GetKeyDown("3"))
+        {
+            Select(2);
         }
         else if (Input.GetKeyDown("escape"))
         {
@@ -58,9 +62,15 @@ public class Builder : MonoBehaviour
 
         if (!chunk.buildedBlocks[x, z])
         {
+
             GameObject newBuild = Instantiate(selected.prefab, chunk.transform);
             newBuild.transform.position = chunk.transform.position + new Vector3(x, 1, z);
             newBuild.GetComponent<Building>().Set(direction, 4, chunk, x, z);
+
+            if (selected.prefab.GetComponent<Conveyor>())
+            {
+                newBuild.GetComponent<Building>().Set(direction, 4, chunk, x, z);
+            }
 
 
             chunk.buildedBlocks[x, z] = newBuild;
@@ -93,7 +103,10 @@ public class Builder : MonoBehaviour
     void Select(int i)
     {
         selected = null;
-        selected = buildsAvailable[i];
+        if(buildsAvailable.Count >= i && buildsAvailable[i] != null)
+        {
+            selected = buildsAvailable[i];
+        }
     }
 
     void Unselect()
