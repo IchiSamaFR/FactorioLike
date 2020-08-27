@@ -47,7 +47,12 @@ public class Building : MonoBehaviour
             posToEject = new Vector2(posX - 1, posZ);
             directionCanceled = 1;
         }
+        _init();
         SetRotation();
+    }
+
+    public virtual void _init()
+    {
     }
 
     void SetRotation()
@@ -80,15 +85,6 @@ public class Building : MonoBehaviour
                             Destroy(toDelete);
                         }
                     } 
-                    else if (obj_buildToDrop.GetComponent<Smeltery>())
-                    {
-                        if (buildToDrop.GetComponent<Smeltery>().GetItem(itemsToEject[0]))
-                        {
-                            GameObject toDelete = itemsToEject[0];
-                            itemsToEject[0] = null;
-                            Destroy(toDelete);
-                        }
-                    }
                     else if (buildToDrop.GetItem(itemsToEject[0]))
                     {
                         GameObject toDelete = itemsToEject[0];
@@ -100,7 +96,7 @@ public class Building : MonoBehaviour
         }
     }
 
-    public bool GetItem(GameObject newItem, int pos)
+    public virtual bool GetItem(GameObject newItem, int pos)
     {
         if (itemsToEject[pos] == null)
         {
@@ -123,7 +119,7 @@ public class Building : MonoBehaviour
         }
     }
 
-    public bool GetItem(GameObject newItem)
+    public virtual bool GetItem(GameObject newItem)
     {
         if (itemsToEject[itemsStockedMax - 1] == null)
         {

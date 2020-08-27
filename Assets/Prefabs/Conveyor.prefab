@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunk: {fileID: 0}
   itemsToEject: []
-  speed: 3
+  speed: 2
   itemsStockedMax: 2
   posX: 0
   posZ: 0

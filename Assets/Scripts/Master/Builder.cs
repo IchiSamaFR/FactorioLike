@@ -69,7 +69,7 @@ public class Builder : MonoBehaviour
 
             if (selected.prefab.GetComponent<Conveyor>())
             {
-                newBuild.GetComponent<Building>().Set(direction, 4, chunk, x, z);
+                newBuild.GetComponent<Building>().Set(direction, 2, chunk, x, z);
             }
 
 

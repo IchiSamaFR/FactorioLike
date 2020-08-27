@@ -7,10 +7,6 @@ public class Conveyor : Building
 
     void Update()
     {
-        if(Time.time < 2)
-        {
-            return;
-        }
         ChangeItemsPos();
     }
 

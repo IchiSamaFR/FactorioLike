@@ -9,7 +9,8 @@ public class Smeltery : Building
     public GameObject[] itemsToTransform = new GameObject[0];
     float timer;
 
-    void Start()
+
+    public override void _init()
     {
         smeltRecipes = SmeltRecipes.instance;
         items = Items.instance;
@@ -26,13 +27,13 @@ public class Smeltery : Building
 
     void Smelt()
     {
-        if (speed > 0)
+        if (speed > 0 && itemsToTransform[0] != null)
         {
             if (timer > 0)
             {
                 timer -= Time.deltaTime;
             }
-            else if (itemsToEject[itemsStockedMax - 1] == null && itemsToTransform[0] != null)
+            else if (itemsToEject[itemsStockedMax - 1] == null)
             {
                 Item itemRessource = itemsToTransform[0].GetComponent<Item>();
                 SmeltRecipe recipe;
@@ -54,13 +55,14 @@ public class Smeltery : Building
     void ChangeItemsPos()
     {
         int pos = 0;
+        int nullBef = 0;
         foreach (GameObject item in itemsToEject)
         {
             if (item != null)
             {
-                if (pos != 0 && itemsToEject[pos - 1] == null)
+                if (nullBef > 0)
                 {
-                    itemsToEject[pos - 1] = itemsToEject[pos];
+                    itemsToEject[pos - nullBef] = itemsToEject[pos];
                     itemsToEject[pos] = null;
                 }
 
@@ -93,19 +95,28 @@ public class Smeltery : Building
                     item.transform.position = posToGet;
                 }
             }
+            else
+            {
+                nullBef++;
+            }
             pos++;
         }
 
         pos = 0;
+        nullBef = 0;
         foreach (GameObject item in itemsToTransform)
         {
-            if(pos != 0 && item != null)
+            if(item != null)
             {
-                if(itemsToTransform[pos - 1] == null)
+                if (nullBef > 0)
                 {
-                    itemsToTransform[pos - 1] = itemsToTransform[pos];
+                    itemsToTransform[pos - nullBef] = itemsToTransform[pos];
                     itemsToTransform[pos] = null;
                 }
+            }
+            else
+            {
+                nullBef++;
             }
             pos++;
         }
@@ -113,21 +124,36 @@ public class Smeltery : Building
     }
 
 
-    public new bool GetItem(GameObject newItem, int pos)
+    public override bool GetItem(GameObject newItem, int pos)
     {
-        if (itemsToTransform[pos] == null)
+        if (itemsToTransform[pos] == null && smeltRecipes.GetResult(newItem.GetComponent<Item>().id) != null)
         {
             GameObject itemInstatiate = Instantiate(newItem, this.transform);
             itemsToTransform[pos] = itemInstatiate;
 
 
-            foreach (Transform obj in itemInstatiate.transform)
-            {
-                obj.GetComponent<MeshRenderer>().enabled = false;
-            }
-
-
+            
+            itemInstatiate.SetActive(false);
             return true;
+        }
+        else if (smeltRecipes.GetResult(newItem.GetComponent<Item>().id) == null)
+        {
+            int posToEject = 0;
+            foreach (GameObject obj in itemsToEject)
+            {
+                if (obj == null)
+                {
+                    GameObject itemInstatiate = Instantiate(newItem, this.transform);
+                    itemsToEject[posToEject] = itemInstatiate;
+
+                    return true;
+                }
+                else
+                {
+                    posToEject++;
+                }
+            }
+            return false;
         }
         else
         {
@@ -135,19 +161,34 @@ public class Smeltery : Building
         }
     }
 
-    public new bool GetItem(GameObject newItem)
+    public override bool GetItem(GameObject newItem)
     {
-        if (itemsToTransform[itemsStockedMax - 1] == null)
+        if (itemsToTransform[itemsStockedMax - 1] == null && smeltRecipes.GetResult(newItem.GetComponent<Item>().id) != null)
         {
             GameObject itemInstatiate = Instantiate(newItem, this.transform);
             itemsToTransform[itemsStockedMax - 1] = itemInstatiate;
 
-            foreach (Transform obj in itemInstatiate.transform)
-            {
-                obj.GetComponent<MeshRenderer>().enabled = false;
-            }
-
+            itemInstatiate.SetActive(false);
             return true;
+        }
+        else if (smeltRecipes.GetResult(newItem.GetComponent<Item>().id) == null)
+        {
+            int posToEject = 0;
+            foreach (GameObject obj in itemsToEject)
+            {
+                if (obj == null)
+                {
+                    GameObject itemInstatiate = Instantiate(newItem, this.transform);
+                    itemsToEject[posToEject] = itemInstatiate;
+
+                    return true;
+                }
+                else
+                {
+                    posToEject++;
+                }
+            }
+            return false;
         }
         else
         {
