@@ -44,7 +44,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8969075339896754061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4107909920121018883}
@@ -63,15 +63,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d20ecabc558d05438b2771624896f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ores: []
-  ore:
-    id: 
-    prefab: {fileID: 0}
+  chunk: {fileID: 0}
+  itemsToEject: []
   speed: 5
-  oresStockedMax: 0
+  itemsStockedMax: 4
   posX: 0
   posZ: 0
   direction: 0
+  directionCanceled: 0
+  posToEject: {x: 0, y: 0}
+  itemProduce: {fileID: 0}
 --- !u!1001 &8969075339515162905
 PrefabInstance:
   m_ObjectHideFlags: 0

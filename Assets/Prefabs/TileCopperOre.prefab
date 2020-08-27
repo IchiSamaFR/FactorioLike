@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posX: 0
   posZ: 0
-  Type: 0
+  Type: 
   chunk: {fileID: 0}
 --- !u!1001 &731879454150342709
 PrefabInstance:
