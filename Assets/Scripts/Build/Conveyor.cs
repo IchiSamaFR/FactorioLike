@@ -1,13 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Conveyor : Building
 {
-
+    bool isInit = false;
     void Update()
     {
         ChangeItemsPos();
+    }
+
+    public override void _init()
+    {
+        SetModel();
     }
 
 
@@ -90,5 +96,173 @@ public class Conveyor : Building
         }
     }
 
+    public override void SetModel()
+    {
+        if (isInit)
+        {
+            return;
+        } 
+        else
+        {
+            isInit = true;
+        }
+        bool[] RLB = new bool[3];
 
+        GameObject toCheck;
+        if ((toCheck = chunk.GetBlockAt(posX, posZ + 1)) != null && direction != 0)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+            }
+        }
+        if ((toCheck = chunk.GetBlockAt(posX + 1, posZ)) != null && direction != 1)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+            }
+        }
+        if ((toCheck = chunk.GetBlockAt(posX, posZ - 1)) != null && direction != 2)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+            }
+        }
+        if ((toCheck = chunk.GetBlockAt(posX - 1, posZ)) != null && direction != 3)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+            }
+        }
+
+        string show = "";
+        if (RLB[0])
+        {
+            show += "R / ";
+        }
+        if (RLB[1])
+        {
+            show += "L / ";
+        }
+        if (RLB[2])
+        {
+            show += "B";
+        }
+        print(show);
+
+
+        GameObject model = null;
+        if (RLB[0])
+        {
+            if (RLB[1])
+            {
+                if (RLB[2])
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                    model = Instantiate(models[6], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                } 
+                else
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                    model = Instantiate(models[5], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+            }
+            else
+            {
+                if (RLB[2])
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                    model = Instantiate(models[4], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+                else
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                    model = Instantiate(models[3], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+            }
+        } 
+        else
+        {
+            if (RLB[1])
+            {
+                if (RLB[2])
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                    model = Instantiate(models[2], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+                else
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                    model = Instantiate(models[1], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+            }
+        }
+        if (model != null)
+        {
+            model.transform.rotation = Quaternion.Euler(0, direction * 90, 0);
+        }
+    }
+
+    bool[] ModelLRB(bool[] RLB, int builDirection)
+    {
+        //  Right
+        int buildingDir = builDirection;
+        if (buildingDir + 1 == 4)
+        {
+            buildingDir = 0;
+            if (buildingDir == direction)
+            {
+                RLB[0] = true;
+                return RLB;
+            }
+        }
+        else
+        {
+            buildingDir += 1;
+            if (buildingDir == direction)
+            {
+                RLB[0] = true;
+                return RLB;
+            }
+        }
+
+        //  Left
+        buildingDir = builDirection;
+        if (buildingDir - 1 == -1)
+        {
+            buildingDir = 3;
+            if (buildingDir == direction)
+            {
+                RLB[1] = true;
+                return RLB;
+            }
+        }
+        else
+        {
+            buildingDir -= 1;
+            if (buildingDir == direction)
+            {
+                RLB[1] = true;
+                return RLB;
+            }
+        }
+
+        //  Back
+        RLB[2] = true;
+
+        return RLB;
+    }
 }

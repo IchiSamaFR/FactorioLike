@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    [Header("Models")]
+    public int modelSet = 0;
+    public GameObject[] models;
+
+
+    [Header("Chunk")]
     public Chunk chunk;
+
+    [Header("Items Stocked")]
     public GameObject[] itemsToEject = new GameObject[0];
 
+    [Header("Stats")]
     public float speed = 2;
     public int itemsStockedMax = 4;
     public int posX;
@@ -49,6 +58,7 @@ public class Building : MonoBehaviour
         }
         _init();
         SetRotation();
+        SetModel();
     }
 
     public virtual void _init()
@@ -57,7 +67,11 @@ public class Building : MonoBehaviour
 
     void SetRotation()
     {
-        this.transform.GetChild(0).transform.rotation = Quaternion.Euler(0, direction * 90, 0);
+        transform.GetChild(0).transform.rotation = Quaternion.Euler(0, direction * 90, 0);
+    }
+
+    public virtual void SetModel()
+    {
     }
 
     public virtual void Eject()
@@ -96,9 +110,10 @@ public class Building : MonoBehaviour
         }
     }
 
-    public virtual bool CanDrop(sbyte dir)
+    public virtual bool CanDrop(sbyte directionCanceled)
     {
-        if(dir != direction)
+        //  If the direction is not canceled it can be droped
+        if(directionCanceled != direction)
         {
             return true;
         } 
@@ -106,6 +121,11 @@ public class Building : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public virtual sbyte GetDirection()
+    {
+        return direction;
     }
 
     public virtual bool GetItem(GameObject newItem, int pos)

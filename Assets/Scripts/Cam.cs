@@ -27,7 +27,6 @@ public class Cam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown("a"))
         {
             if (Time.timeScale == 0.1f)

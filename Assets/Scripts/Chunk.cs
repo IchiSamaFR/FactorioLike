@@ -152,6 +152,27 @@ public class Chunk : MonoBehaviour
         buildedBlocks[x, z] = null;
     }
 
+    public void RefreshBlocs(int posX, int posZ)
+    {
+        GameObject ToCheck;
+        if((ToCheck = GetBlockAt(posX + 1, posZ)) != null)
+        {
+            ToCheck.GetComponent<Building>().SetModel();
+        }
+        if ((ToCheck = GetBlockAt(posX, posZ + 1)) != null)
+        {
+            ToCheck.GetComponent<Building>().SetModel();
+        }
+        if ((ToCheck = GetBlockAt(posX - 1, posZ)) != null)
+        {
+            ToCheck.GetComponent<Building>().SetModel();
+        }
+        if ((ToCheck = GetBlockAt(posX, posZ - 1)) != null)
+        {
+            ToCheck.GetComponent<Building>().SetModel();
+        }
+    }
+
 
     public void SpeedMapGen()
     {

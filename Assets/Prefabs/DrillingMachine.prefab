@@ -63,6 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d20ecabc558d05438b2771624896f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  models:
+  - {fileID: 1106024680089397264}
   chunk: {fileID: 0}
   itemsToEject: []
   speed: 0.1

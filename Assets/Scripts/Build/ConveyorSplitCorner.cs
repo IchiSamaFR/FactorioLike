@@ -52,7 +52,6 @@ public class ConveyorSplitCorner : Building
 
     public override void Eject()
     {
-        print("e");
         if (itemsToEject[0] != null)
         {
             GameObject obj_buildToDrop = null;
@@ -137,7 +136,6 @@ public class ConveyorSplitCorner : Building
         {
             if (item != null)
             {
-                print(i);
                 //  Where to go by item placement
                 Vector3 toGo = new Vector3();
                 if (direction == 0)

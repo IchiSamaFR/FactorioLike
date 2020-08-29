@@ -44,6 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27d21a0c90daa147a383284975b0559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelSet: 0
+  models:
+  - {fileID: -927199367670048503, guid: 6d86c526614d5fb44a75a0c90bd02ed5, type: 3}
+  - {fileID: -927199367670048503, guid: ec0bc0c41b9f4f44094208403b46d6a4, type: 3}
+  - {fileID: -927199367670048503, guid: 1617ed270050dcf47b9d7bad2292e743, type: 3}
+  - {fileID: -927199367670048503, guid: bba3d21b50d703c4bb0980154f58b852, type: 3}
+  - {fileID: -927199367670048503, guid: b1b60869ec009724c88885c08e5c33d0, type: 3}
+  - {fileID: -927199367670048503, guid: 585d4cd7e6e416a418e7a58170c19f9b, type: 3}
+  - {fileID: -927199367670048503, guid: 868d62e68a3f3234bb471a4a8af0490f, type: 3}
   chunk: {fileID: 0}
   itemsToEject: []
   speed: 2

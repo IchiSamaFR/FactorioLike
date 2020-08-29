@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63a2cff7ff11a024d8d1bef8462362a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  models:
+  - {fileID: 7098253963779616841}
   chunk: {fileID: 0}
   itemsToEject: []
   speed: 2
@@ -122,6 +124,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7b96d76a3858a240875f1c7992f74f4, type: 3}
+--- !u!1 &7098253963779616841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: b7b96d76a3858a240875f1c7992f74f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1271138011343022400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6113998816975864410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b7b96d76a3858a240875f1c7992f74f4,
