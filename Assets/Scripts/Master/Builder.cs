@@ -32,6 +32,10 @@ public class Builder : MonoBehaviour
         {
             Select(2);
         }
+        else if (Input.GetKeyDown("4"))
+        {
+            Select(3);
+        }
         else if (Input.GetKeyDown("escape"))
         {
             Unselect();

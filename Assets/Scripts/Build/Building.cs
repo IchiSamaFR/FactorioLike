@@ -60,7 +60,7 @@ public class Building : MonoBehaviour
         this.transform.GetChild(0).transform.rotation = Quaternion.Euler(0, direction * 90, 0);
     }
 
-    public void Eject()
+    public virtual void Eject()
     {
         if (itemsToEject[0] != null)
         {
@@ -68,7 +68,7 @@ public class Building : MonoBehaviour
             if ((obj_buildToDrop = chunk.GetBlockAt((int)posToEject.x, (int)posToEject.y)))
             {
                 Building buildToDrop = null;
-                if((buildToDrop = obj_buildToDrop.GetComponent<Building>()) && buildToDrop.direction != directionCanceled)
+                if((buildToDrop = obj_buildToDrop.GetComponent<Building>()) && buildToDrop.CanDrop(directionCanceled))
                 {
                     if (obj_buildToDrop.GetComponent<Conveyor>())
                     {
@@ -96,21 +96,33 @@ public class Building : MonoBehaviour
         }
     }
 
+    public virtual bool CanDrop(sbyte dir)
+    {
+        if(dir != direction)
+        {
+            return true;
+        } 
+        else
+        {
+            return false;
+        }
+    }
+
     public virtual bool GetItem(GameObject newItem, int pos)
     {
         if (itemsToEject[pos] == null)
         {
-            GameObject oreInstantiate = Instantiate(newItem, this.transform);
-            oreInstantiate.transform.position = newItem.transform.position;
-            itemsToEject[pos] = oreInstantiate;
+            GameObject itemInstantiate = Instantiate(newItem, this.transform);
+            itemInstantiate.transform.position = newItem.transform.position;
+            itemsToEject[pos] = itemInstantiate;
 
             if (chunk.active)
             {
-                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
             }
             else
             {
-                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             }
             return true;
         } else
@@ -123,33 +135,18 @@ public class Building : MonoBehaviour
     {
         if (itemsToEject[itemsStockedMax - 1] == null)
         {
-            GameObject oreInstantiate = Instantiate(newItem, this.transform);
-            itemsToEject[itemsStockedMax - 1] = oreInstantiate;
+            GameObject itemInstantiate = Instantiate(newItem, this.transform);
+            itemInstantiate.transform.position = newItem.transform.position;
+            itemsToEject[itemsStockedMax - 1] = itemInstantiate;
 
-            if (direction == 0)
-            {
-                oreInstantiate.transform.position = this.transform.position + new Vector3(0.5f, 0.3f, 0);
-            }
-            else if (direction == 1)
-            {
-                oreInstantiate.transform.position = this.transform.position + new Vector3(0, 0.3f, 0.5f);
-            }
-            else if (direction == 2)
-            {
-                oreInstantiate.transform.position = this.transform.position + new Vector3(0.5f, 0.3f, 1);
-            }
-            else if (direction == 3)
-            {
-                oreInstantiate.transform.position = this.transform.position + new Vector3(1, 0.3f, 0.5f);
-            }
 
             if (chunk.active)
             {
-                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
             }
             else
             {
-                oreInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             }
             return true;
         } else
