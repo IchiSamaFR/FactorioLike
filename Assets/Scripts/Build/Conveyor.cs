@@ -13,7 +13,15 @@ public class Conveyor : Building
 
     public override void _init()
     {
-        SetModel();
+        if (isInit)
+        {
+            return;
+        }
+        else
+        {
+            isInit = true;
+            SetModel();
+        }
     }
 
 
@@ -98,14 +106,7 @@ public class Conveyor : Building
 
     public override void SetModel()
     {
-        if (isInit)
-        {
-            return;
-        } 
-        else
-        {
-            isInit = true;
-        }
+        
         bool[] RLB = new bool[3];
 
         GameObject toCheck;
@@ -155,7 +156,6 @@ public class Conveyor : Building
         {
             show += "B";
         }
-        print(show);
 
 
         GameObject model = null;

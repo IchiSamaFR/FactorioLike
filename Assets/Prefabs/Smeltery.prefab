@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9e4108286948a4c957153b84281f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelSet: 0
   models:
   - {fileID: 2671226899368342030}
   chunk: {fileID: 0}
   itemsToEject: []
-  speed: 2
+  speed: 3
   itemsStockedMax: 4
   posX: 0
   posZ: 0

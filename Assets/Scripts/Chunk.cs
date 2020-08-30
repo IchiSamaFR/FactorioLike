@@ -150,6 +150,7 @@ public class Chunk : MonoBehaviour
         GameObject Save = buildedBlocks[x, z];
         Destroy(Save);
         buildedBlocks[x, z] = null;
+        RefreshBlocs(x, z);
     }
 
     public void RefreshBlocs(int posX, int posZ)

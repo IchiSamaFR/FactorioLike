@@ -16,6 +16,7 @@ public class Smeltery : Building
         items = Items.instance;
 
         itemsToTransform = new GameObject[itemsStockedMax];
+        timer = speed;
     }
 
     void Update()

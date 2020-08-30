@@ -59,6 +59,10 @@ public class Builder : MonoBehaviour
 
     public void Build(GameObject target, sbyte direction)
     {
+        if (selected == null)
+        {
+            return;
+        }
         Block block = target.GetComponent<Block>();
         Chunk chunk = block.chunk;
         int x = block.posX;
@@ -86,6 +90,7 @@ public class Builder : MonoBehaviour
                 newBuild.GetComponent<DrillingMachine>().AddItemToProduce(chunk.groundBlocks[x, z].GetComponent<Block>().Type);
                 chunk.buildedBlocks[x, z] = newBuild;
             }
+            chunk.RefreshBlocs(x, z);
             //block.chunk.AddBuild(block.posX, block.posZ, selected.prefab, direction);
         }
     }
