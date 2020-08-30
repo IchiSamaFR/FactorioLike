@@ -6,14 +6,9 @@ public class ConveyorSplitCorner : Building
 {
     Vector2[] dirToEject = new Vector2[2];
     sbyte[] dirCanceled = new sbyte[2];
-    sbyte dirEject = 0;
+    sbyte[] directions = new sbyte[2];
     sbyte dir = 0;
 
-    // Start is called before the first frame update
-    void Update()
-    {
-        ChangeItemsPos();
-    }
 
     public override void _init()
     {
@@ -23,6 +18,8 @@ public class ConveyorSplitCorner : Building
             dirToEject[1] = new Vector2(posX + 1, posZ);
             dirCanceled[0] = 2;
             dirCanceled[1] = 3;
+            directions[0] = 0;
+            directions[1] = 1;
         }
         else if (direction == 1)
         {
@@ -30,6 +27,8 @@ public class ConveyorSplitCorner : Building
             dirToEject[1] = new Vector2(posX, posZ - 1);
             dirCanceled[0] = 3;
             dirCanceled[1] = 0;
+            directions[0] = 1;
+            directions[1] = 2;
         }
         else if (direction == 2)
         {
@@ -37,6 +36,8 @@ public class ConveyorSplitCorner : Building
             dirToEject[1] = new Vector2(posX - 1, posZ);
             dirCanceled[0] = 0;
             dirCanceled[1] = 1;
+            directions[0] = 2;
+            directions[1] = 3;
         }
         else if (direction == 3)
         {
@@ -44,11 +45,22 @@ public class ConveyorSplitCorner : Building
             dirToEject[1] = new Vector2(posX, posZ + 1);
             dirCanceled[0] = 1;
             dirCanceled[1] = 2;
+            directions[0] = 3;
+            directions[1] = 0;
         }
 
         this.itemsStockedMax = 3;
         itemsToEject = new GameObject[itemsStockedMax];
+
+        multipleDir = true;
     }
+
+    // Start is called before the first frame update
+    void Update()
+    {
+        ChangeItemsPos();
+    }
+
 
     public override void Eject()
     {
@@ -127,6 +139,20 @@ public class ConveyorSplitCorner : Building
         {
             return false;
         }
+    }
+    public override sbyte GetDirection(Vector2 dir)
+    {
+        int x = 0;
+        foreach(Vector2 vector in dirToEject)
+        {
+            if(dir == vector)
+            {
+                return directions[x];
+            }
+            x++;
+        }
+
+        return -1;
     }
 
     public void ChangeItemsPos()

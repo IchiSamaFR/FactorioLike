@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: b7b96d76a3858a240875f1c7992f74f4
+guid: eb9945a2a6fac1946991fa47defefc56
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Carpet
-    second: {fileID: 2100000, guid: b598d823c5e38ee43a0ce6accadcdc87, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: CarpetEnter
-    second: {fileID: 2100000, guid: a0970e701876723459b5e4943cc056d1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Iron
-    second: {fileID: 2100000, guid: 9bc398307593e9849a1b9620fa6b1352, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0

@@ -23,6 +23,7 @@ public class Building : MonoBehaviour
 
 
     public sbyte direction = 0;
+    public bool multipleDir = false;
     public sbyte directionCanceled = 0;
     public Vector2 posToEject = new Vector2();
 
@@ -124,6 +125,10 @@ public class Building : MonoBehaviour
     }
 
     public virtual sbyte GetDirection()
+    {
+        return direction;
+    }
+    public virtual sbyte GetDirection(Vector2 dir)
     {
         return direction;
     }

@@ -115,7 +115,14 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                if (buildingCheck.multipleDir)
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                }
             }
         }
         if ((toCheck = chunk.GetBlockAt(posX + 1, posZ)) != null && direction != 1)
@@ -123,7 +130,14 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                if (buildingCheck.multipleDir)
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                }
             }
         }
         if ((toCheck = chunk.GetBlockAt(posX, posZ - 1)) != null && direction != 2)
@@ -131,7 +145,14 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                if (buildingCheck.multipleDir)
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                }
             }
         }
         if ((toCheck = chunk.GetBlockAt(posX - 1, posZ)) != null && direction != 3)
@@ -139,7 +160,14 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                if (buildingCheck.multipleDir)
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                }
             }
         }
 
@@ -165,13 +193,13 @@ public class Conveyor : Building
             {
                 if (RLB[2])
                 {
-                    Destroy(transform.GetChild(0).gameObject);
+                    DestroyModels();
                     model = Instantiate(models[6], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 } 
                 else
                 {
-                    Destroy(transform.GetChild(0).gameObject);
+                    DestroyModels();
                     model = Instantiate(models[5], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
@@ -180,13 +208,13 @@ public class Conveyor : Building
             {
                 if (RLB[2])
                 {
-                    Destroy(transform.GetChild(0).gameObject);
+                    DestroyModels();
                     model = Instantiate(models[4], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
                 else
                 {
-                    Destroy(transform.GetChild(0).gameObject);
+                    DestroyModels();
                     model = Instantiate(models[3], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
@@ -198,21 +226,35 @@ public class Conveyor : Building
             {
                 if (RLB[2])
                 {
-                    Destroy(transform.GetChild(0).gameObject);
+                    DestroyModels();
                     model = Instantiate(models[2], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
                 else
                 {
-                    Destroy(transform.GetChild(0).gameObject);
+                    DestroyModels();
                     model = Instantiate(models[1], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
+            }
+            else
+            {
+                DestroyModels();
+                model = Instantiate(models[0], this.transform);
+                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
             }
         }
         if (model != null)
         {
             model.transform.rotation = Quaternion.Euler(0, direction * 90, 0);
+        }
+    }
+
+    void DestroyModels()
+    {
+        foreach(Transform test in transform)
+        {
+            Destroy(test.gameObject);
         }
     }
 
