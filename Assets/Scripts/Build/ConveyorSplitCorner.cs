@@ -320,84 +320,81 @@ public class ConveyorSplitCorner : Building
     public override void SetModel()
     {
 
-        bool[] LB = new bool[3];
+        bool[] LB = new bool[2];
 
         GameObject toCheck;
-        if ((toCheck = chunk.GetBlockAt(posX, posZ + 1)) != null && direction != 0)
+        if ((toCheck = chunk.GetBlockAt(posX, posZ + 1)) != null && direction != 0 && direction != 3)
         {
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(2))
                 {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                    if (direction - 3 < 0)
+                    {
+                        LB[direction - 3 + 2] = true;
+                    }
+                    else
+                    {
+                        LB[direction - 3] = true;
+                    }
                 }
             }
         }
-        if ((toCheck = chunk.GetBlockAt(posX + 1, posZ)) != null && direction != 1)
+        if ((toCheck = chunk.GetBlockAt(posX + 1, posZ)) != null && direction != 1 && direction != 0)
         {
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(3))
                 {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                    if (direction - 4 < 0)
+                    {
+                        LB[direction - 4 + 2] = true;
+                    }
+                    else
+                    {
+                        LB[direction - 4] = true;
+                    }
                 }
             }
         }
-        if ((toCheck = chunk.GetBlockAt(posX, posZ - 1)) != null && direction != 2)
+        if ((toCheck = chunk.GetBlockAt(posX, posZ - 1)) != null && direction != 2 && direction != 1)
         {
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(0))
                 {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                    if (direction - 1 < 0)
+                    {
+                        LB[direction - 1 + 2] = true;
+                    }
+                    else
+                    {
+                        LB[direction - 1] = true;
+                    }
                 }
             }
         }
-        if ((toCheck = chunk.GetBlockAt(posX - 1, posZ)) != null && direction != 3)
+        if ((toCheck = chunk.GetBlockAt(posX - 1, posZ)) != null && direction != 3 && direction != 2)
         {
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(1))
                 {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                    if (direction - 2 < 0)
+                    {
+                        LB[direction - 2 + 2] = true;
+                    }
+                    else
+                    {
+                        LB[direction - 2] = true;
+                    }
                 }
             }
         }
-
-        string show = "";
-        if (LB[0])
-        {
-            show += "R / ";
-        }
-        if (LB[1])
-        {
-            show += "L / ";
-        }
-        if (LB[2])
-        {
-            show += "B";
-        }
-
 
         GameObject model = null;
         if (LB[0])
@@ -442,34 +439,5 @@ public class ConveyorSplitCorner : Building
         {
             Destroy(test.gameObject);
         }
-    }
-
-    bool[] ModelLRB(bool[] LB, int builDirection)
-    {
-        //  Right
-        int buildingDir = builDirection;
-        if (buildingDir + 1 == 4)
-        {
-            buildingDir = 0;
-            if (buildingDir == direction)
-            {
-                LB[0] = true;
-                return LB;
-            }
-        }
-        else
-        {
-            buildingDir += 1;
-            if (buildingDir == direction)
-            {
-                LB[0] = true;
-                return LB;
-            }
-        }
-
-        //  Back
-        LB[1] = true;
-
-        return LB;
     }
 }

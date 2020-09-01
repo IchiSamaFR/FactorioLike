@@ -183,21 +183,6 @@ public class Conveyor : Building
             }
         }
 
-        string show = "";
-        if (LBR[2])
-        {
-            show += "R / ";
-        }
-        if (LBR[0])
-        {
-            show += "L / ";
-        }
-        if (LBR[1])
-        {
-            show += "B  / ";
-        }
-
-
         GameObject model = null;
         if (LBR[0])
         {
