@@ -155,6 +155,19 @@ public class ConveyorSplitCorner : Building
         return -1;
     }
 
+    public override bool HasDirection(int dirWanted)
+    {
+        int x = 0;
+        foreach (sbyte vector in directions)
+        {
+            if (dirWanted == vector)
+            {
+                return true;
+            }
+            x++;
+        }
+        return false;
+    }
     public void ChangeItemsPos()
     {
         int i = 0;
@@ -302,5 +315,161 @@ public class ConveyorSplitCorner : Building
         {
             dir = 0;
         }
+    }
+
+    public override void SetModel()
+    {
+
+        bool[] LB = new bool[3];
+
+        GameObject toCheck;
+        if ((toCheck = chunk.GetBlockAt(posX, posZ + 1)) != null && direction != 0)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                if (buildingCheck.multipleDir)
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                }
+            }
+        }
+        if ((toCheck = chunk.GetBlockAt(posX + 1, posZ)) != null && direction != 1)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                if (buildingCheck.multipleDir)
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                }
+            }
+        }
+        if ((toCheck = chunk.GetBlockAt(posX, posZ - 1)) != null && direction != 2)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                if (buildingCheck.multipleDir)
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                }
+            }
+        }
+        if ((toCheck = chunk.GetBlockAt(posX - 1, posZ)) != null && direction != 3)
+        {
+            Building buildingCheck;
+            if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
+            {
+                if (buildingCheck.multipleDir)
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
+                }
+                else
+                {
+                    LB = ModelLRB(LB, buildingCheck.GetDirection());
+                }
+            }
+        }
+
+        string show = "";
+        if (LB[0])
+        {
+            show += "R / ";
+        }
+        if (LB[1])
+        {
+            show += "L / ";
+        }
+        if (LB[2])
+        {
+            show += "B";
+        }
+
+
+        GameObject model = null;
+        if (LB[0])
+        {
+            if (LB[1])
+            {
+                DestroyModels();
+                model = Instantiate(models[1], this.transform);
+                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+            }
+            else
+            {
+                DestroyModels();
+                model = Instantiate(models[2], this.transform);
+                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+            }
+        }
+        else
+        {
+            if (LB[1])
+            {
+                DestroyModels();
+                model = Instantiate(models[0], this.transform);
+                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+            }
+            else
+            {
+                DestroyModels();
+                model = Instantiate(models[1], this.transform);
+                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+            }
+        }
+        if (model != null)
+        {
+            model.transform.rotation = Quaternion.Euler(0, direction * 90, 0);
+        }
+    }
+
+    void DestroyModels()
+    {
+        foreach (Transform test in transform)
+        {
+            Destroy(test.gameObject);
+        }
+    }
+
+    bool[] ModelLRB(bool[] LB, int builDirection)
+    {
+        //  Right
+        int buildingDir = builDirection;
+        if (buildingDir + 1 == 4)
+        {
+            buildingDir = 0;
+            if (buildingDir == direction)
+            {
+                LB[0] = true;
+                return LB;
+            }
+        }
+        else
+        {
+            buildingDir += 1;
+            if (buildingDir == direction)
+            {
+                LB[0] = true;
+                return LB;
+            }
+        }
+
+        //  Back
+        LB[1] = true;
+
+        return LB;
     }
 }

@@ -132,6 +132,14 @@ public class Building : MonoBehaviour
     {
         return direction;
     }
+    public virtual bool HasDirection(int dirWanted)
+    {
+        if(direction == dirWanted)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public virtual bool GetItem(GameObject newItem, int pos)
     {

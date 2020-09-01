@@ -107,7 +107,7 @@ public class Conveyor : Building
     public override void SetModel()
     {
         
-        bool[] RLB = new bool[3];
+        bool[] LBR = new bool[3];
 
         GameObject toCheck;
         if ((toCheck = chunk.GetBlockAt(posX, posZ + 1)) != null && direction != 0)
@@ -115,13 +115,16 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(2))
                 {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                    if (direction - 1 < 0)
+                    {
+                        LBR[direction - 1 + 4] = true;
+                    }
+                    else
+                    {
+                        LBR[direction - 1] = true;
+                    }
                 }
             }
         }
@@ -130,13 +133,16 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(3))
                 {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                    if (direction - 2 < 0)
+                    {
+                        LBR[direction - 2 + 4] = true;
+                    }
+                    else
+                    {
+                        LBR[direction - 2] = true;
+                    }
                 }
             }
         }
@@ -145,13 +151,16 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(0))
                 {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                    if (direction - 3 < 0)
+                    {
+                        LBR[direction - 3 + 4] = true;
+                    }
+                    else
+                    {
+                        LBR[direction - 3] = true;
+                    }
                 }
             }
         }
@@ -160,38 +169,41 @@ public class Conveyor : Building
             Building buildingCheck;
             if ((buildingCheck = toCheck.GetComponent<Building>()) != null)
             {
-                if (buildingCheck.multipleDir)
+                if (buildingCheck.HasDirection(1))
                 {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection(new Vector2(posX, posZ)));
-                }
-                else
-                {
-                    RLB = ModelLRB(RLB, buildingCheck.GetDirection());
+                    if (direction - 4 < 0)
+                    {
+                        LBR[direction - 4 + 4] = true;
+                    }
+                    else
+                    {
+                        LBR[direction - 4] = true;
+                    }
                 }
             }
         }
 
         string show = "";
-        if (RLB[0])
+        if (LBR[2])
         {
             show += "R / ";
         }
-        if (RLB[1])
+        if (LBR[0])
         {
             show += "L / ";
         }
-        if (RLB[2])
+        if (LBR[1])
         {
-            show += "B";
+            show += "B  / ";
         }
 
 
         GameObject model = null;
-        if (RLB[0])
+        if (LBR[0])
         {
-            if (RLB[1])
+            if (LBR[1])
             {
-                if (RLB[2])
+                if (LBR[2])
                 {
                     DestroyModels();
                     model = Instantiate(models[6], this.transform);
@@ -200,34 +212,16 @@ public class Conveyor : Building
                 else
                 {
                     DestroyModels();
-                    model = Instantiate(models[5], this.transform);
+                    model = Instantiate(models[2], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
             }
             else
             {
-                if (RLB[2])
+                if (LBR[2])
                 {
                     DestroyModels();
-                    model = Instantiate(models[4], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
-                }
-                else
-                {
-                    DestroyModels();
-                    model = Instantiate(models[3], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
-                }
-            }
-        } 
-        else
-        {
-            if (RLB[1])
-            {
-                if (RLB[2])
-                {
-                    DestroyModels();
-                    model = Instantiate(models[2], this.transform);
+                    model = Instantiate(models[5], this.transform);
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
                 else
@@ -237,11 +231,38 @@ public class Conveyor : Building
                     model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
                 }
             }
+        } 
+        else
+        {
+            if (LBR[1])
+            {
+                if (LBR[2])
+                {
+                    DestroyModels();
+                    model = Instantiate(models[4], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+                else
+                {
+                    DestroyModels();
+                    model = Instantiate(models[0], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+            }
             else
             {
-                DestroyModels();
-                model = Instantiate(models[0], this.transform);
-                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                if (LBR[2])
+                {
+                    DestroyModels();
+                    model = Instantiate(models[3], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
+                else
+                {
+                    DestroyModels();
+                    model = Instantiate(models[0], this.transform);
+                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                }
             }
         }
         if (model != null)
@@ -256,55 +277,5 @@ public class Conveyor : Building
         {
             Destroy(test.gameObject);
         }
-    }
-
-    bool[] ModelLRB(bool[] RLB, int builDirection)
-    {
-        //  Right
-        int buildingDir = builDirection;
-        if (buildingDir + 1 == 4)
-        {
-            buildingDir = 0;
-            if (buildingDir == direction)
-            {
-                RLB[0] = true;
-                return RLB;
-            }
-        }
-        else
-        {
-            buildingDir += 1;
-            if (buildingDir == direction)
-            {
-                RLB[0] = true;
-                return RLB;
-            }
-        }
-
-        //  Left
-        buildingDir = builDirection;
-        if (buildingDir - 1 == -1)
-        {
-            buildingDir = 3;
-            if (buildingDir == direction)
-            {
-                RLB[1] = true;
-                return RLB;
-            }
-        }
-        else
-        {
-            buildingDir -= 1;
-            if (buildingDir == direction)
-            {
-                RLB[1] = true;
-                return RLB;
-            }
-        }
-
-        //  Back
-        RLB[2] = true;
-
-        return RLB;
     }
 }

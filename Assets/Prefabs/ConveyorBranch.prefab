@@ -46,7 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelSet: 0
   models:
-  - {fileID: 0}
+  - {fileID: -927199367670048503, guid: eb9945a2a6fac1946991fa47defefc56, type: 3}
+  - {fileID: -927199367670048503, guid: 2a21a3ba0f1875e41b7e9739e5596109, type: 3}
+  - {fileID: -927199367670048503, guid: ee9ab7eb2731835439902e57c1e60209, type: 3}
   chunk: {fileID: 0}
   itemsToEject: []
   speed: 2
@@ -54,6 +56,7 @@ MonoBehaviour:
   posX: 0
   posZ: 0
   direction: 0
+  multipleDir: 0
   directionCanceled: 0
   posToEject: {x: 0, y: 0}
 --- !u!1001 &4306337750421896278
