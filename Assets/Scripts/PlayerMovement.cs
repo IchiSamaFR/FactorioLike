@@ -12,9 +12,16 @@ public class PlayerMovement : MonoBehaviour
     public string RightKey = "d";
     public string backKey = "s";
 
+
     [Header("Keys")]
     public string interactionKey = "e";
     public string turnKey = "r";
+
+
+    [Header("Lerp")]
+    public float CameraLerp = 10;
+
+
 
     Vector3 toGo = new Vector3();
 
@@ -90,18 +97,18 @@ public class PlayerMovement : MonoBehaviour
 
         //  Rotation du personnage de gauche à droite
         Quaternion target = Quaternion.Euler(0, toLook.y, 0);
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, target, Time.deltaTime * 8);
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, target, Time.deltaTime * CameraLerp);
 
         //  S'il regarde au dessus de 10, alors on bloque la rotation du personnage pour ne pas qu'il soit couché
         if (toLook.x < -10)
         {
             target = Quaternion.Euler(-10, 0, 0);
-            body.transform.rotation = Quaternion.Slerp(body.transform.rotation, target, Time.deltaTime * 8);
+            body.transform.rotation = Quaternion.Slerp(body.transform.rotation, target, Time.deltaTime * CameraLerp);
             target = Quaternion.Euler(body.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
             body.transform.rotation = target;
 
             target = Quaternion.Euler(toLook.x, 0, 0);
-            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, target, Time.deltaTime * 8);
+            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, target, Time.deltaTime * CameraLerp);
             target = Quaternion.Euler(cam.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
             cam.transform.rotation = target;
         }
@@ -109,12 +116,12 @@ public class PlayerMovement : MonoBehaviour
         else if (toLook.x > 20)
         {
             target = Quaternion.Euler(20, 0, 0);
-            body.transform.rotation = Quaternion.Slerp(body.transform.rotation, target, Time.deltaTime * 8);
+            body.transform.rotation = Quaternion.Slerp(body.transform.rotation, target, Time.deltaTime * CameraLerp);
             target = Quaternion.Euler(body.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
             body.transform.rotation = target;
 
             target = Quaternion.Euler(toLook.x, 0, 0);
-            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, target, Time.deltaTime * 8);
+            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, target, Time.deltaTime * CameraLerp);
             target = Quaternion.Euler(cam.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
             cam.transform.rotation = target;
         }
@@ -122,8 +129,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             target = Quaternion.Euler(toLook.x, 0, 0);
-            body.transform.rotation = Quaternion.Slerp(body.transform.rotation, target, Time.deltaTime * 8);
-            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, target, Time.deltaTime * 8);
+            body.transform.rotation = Quaternion.Slerp(body.transform.rotation, target, Time.deltaTime * CameraLerp);
+            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, target, Time.deltaTime * CameraLerp);
 
             target = Quaternion.Euler(body.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
             body.transform.rotation = target;

@@ -22,6 +22,10 @@ public class Conveyor : Building
             isInit = true;
             SetModel();
         }
+        foreach (Transform test in transform)
+        {
+            Destroy(test.gameObject);
+        }
     }
 
 
@@ -190,30 +194,22 @@ public class Conveyor : Building
             {
                 if (LBR[2])
                 {
-                    DestroyModels();
-                    model = Instantiate(models[6], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[6];
                 } 
                 else
                 {
-                    DestroyModels();
-                    model = Instantiate(models[2], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[2];
                 }
             }
             else
             {
                 if (LBR[2])
                 {
-                    DestroyModels();
-                    model = Instantiate(models[5], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[5];
                 }
                 else
                 {
-                    DestroyModels();
-                    model = Instantiate(models[1], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[1];
                 }
             }
         } 
@@ -223,44 +219,32 @@ public class Conveyor : Building
             {
                 if (LBR[2])
                 {
-                    DestroyModels();
-                    model = Instantiate(models[4], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[4];
                 }
                 else
                 {
-                    DestroyModels();
-                    model = Instantiate(models[0], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[0];
                 }
             }
             else
             {
                 if (LBR[2])
                 {
-                    DestroyModels();
-                    model = Instantiate(models[3], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[3];
                 }
                 else
                 {
-                    DestroyModels();
-                    model = Instantiate(models[0], this.transform);
-                    model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                    model = models[0];
                 }
             }
         }
-        if (model != null)
-        {
-            model.transform.rotation = Quaternion.Euler(0, direction * 90, 0);
-        }
-    }
 
-    void DestroyModels()
-    {
-        foreach(Transform test in transform)
+        if ((modelSet == null && model != null) || model != modelSet)
         {
-            Destroy(test.gameObject);
+            Destroy(modelSet);
+            modelSet = Instantiate(model, this.transform);
+            modelSet.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+            modelSet.transform.rotation = Quaternion.Euler(0, direction * 90, 0);
         }
     }
 }

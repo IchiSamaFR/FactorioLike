@@ -5,7 +5,7 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     [Header("Models")]
-    public int modelSet = 0;
+    public GameObject modelSet = null;
     public GameObject[] models;
 
 

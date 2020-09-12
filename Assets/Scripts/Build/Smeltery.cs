@@ -41,10 +41,21 @@ public class Smeltery : Building
 
                 if((recipe = smeltRecipes.GetResult(itemRessource.id)) != null)
                 {
-                    itemsToEject[itemsStockedMax - 1] = Instantiate(items.GetItem(recipe.resultId), this.transform);
+                    GameObject itemInstantiate = Instantiate(items.GetItem(recipe.resultId), this.transform);
+                    itemsToEject[itemsStockedMax - 1] = itemInstantiate;
+
+                    if (chunk.active)
+                    {
+                        itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else
+                    {
+                        itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                    }
+
+
                     GameObject toDelete;
                     toDelete = itemsToTransform[0];
-
                     itemsToTransform[0] = null;
                     Destroy(toDelete);
                     timer = speed;
@@ -129,12 +140,19 @@ public class Smeltery : Building
     {
         if (itemsToTransform[pos] == null && smeltRecipes.GetResult(newItem.GetComponent<Item>().id) != null)
         {
-            GameObject itemInstatiate = Instantiate(newItem, this.transform);
-            itemsToTransform[pos] = itemInstatiate;
+            GameObject itemInstantiate = Instantiate(newItem, this.transform);
+            itemsToTransform[pos] = itemInstantiate;
 
+            if (chunk.active)
+            {
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+            }
+            else
+            {
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            }
 
-            
-            itemInstatiate.SetActive(false);
+            itemInstantiate.SetActive(false);
             return true;
         }
         else if (smeltRecipes.GetResult(newItem.GetComponent<Item>().id) == null)
@@ -144,8 +162,17 @@ public class Smeltery : Building
             {
                 if (obj == null)
                 {
-                    GameObject itemInstatiate = Instantiate(newItem, this.transform);
-                    itemsToEject[posToEject] = itemInstatiate;
+                    GameObject itemInstantiate = Instantiate(newItem, this.transform);
+                    itemsToEject[posToEject] = itemInstantiate;
+
+                    if (chunk.active)
+                    {
+                        itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else
+                    {
+                        itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                    }
 
                     return true;
                 }
@@ -166,10 +193,18 @@ public class Smeltery : Building
     {
         if (itemsToTransform[itemsStockedMax - 1] == null && smeltRecipes.GetResult(newItem.GetComponent<Item>().id) != null)
         {
-            GameObject itemInstatiate = Instantiate(newItem, this.transform);
-            itemsToTransform[itemsStockedMax - 1] = itemInstatiate;
+            GameObject itemInstantiate = Instantiate(newItem, this.transform);
+            itemsToTransform[itemsStockedMax - 1] = itemInstantiate;
+            if (chunk.active)
+            {
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+            }
+            else
+            {
+                itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            }
 
-            itemInstatiate.SetActive(false);
+            itemInstantiate.SetActive(false);
             return true;
         }
         else if (smeltRecipes.GetResult(newItem.GetComponent<Item>().id) == null)
@@ -179,8 +214,17 @@ public class Smeltery : Building
             {
                 if (obj == null)
                 {
-                    GameObject itemInstatiate = Instantiate(newItem, this.transform);
-                    itemsToEject[posToEject] = itemInstatiate;
+                    GameObject itemInstantiate = Instantiate(newItem, this.transform);
+                    itemsToEject[posToEject] = itemInstantiate;
+
+                    if (chunk.active)
+                    {
+                        itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else
+                    {
+                        itemInstantiate.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                    }
 
                     return true;
                 }

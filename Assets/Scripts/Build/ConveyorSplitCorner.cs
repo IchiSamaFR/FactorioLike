@@ -53,6 +53,11 @@ public class ConveyorSplitCorner : Building
         itemsToEject = new GameObject[itemsStockedMax];
 
         multipleDir = true;
+
+        foreach (Transform test in transform)
+        {
+            Destroy(test.gameObject);
+        }
     }
 
     // Start is called before the first frame update
@@ -370,6 +375,10 @@ public class ConveyorSplitCorner : Building
                     {
                         LB[direction - 1 + 2] = true;
                     }
+                    else if (direction - 1 > 1)
+                    {
+                        LB[direction - 3] = true;
+                    } 
                     else
                     {
                         LB[direction - 1] = true;
@@ -401,35 +410,31 @@ public class ConveyorSplitCorner : Building
         {
             if (LB[1])
             {
-                DestroyModels();
-                model = Instantiate(models[1], this.transform);
-                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                model = models[1];
             }
             else
             {
-                DestroyModels();
-                model = Instantiate(models[2], this.transform);
-                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                model = models[2];
             }
         }
         else
         {
             if (LB[1])
             {
-                DestroyModels();
-                model = Instantiate(models[0], this.transform);
-                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                model = models[0];
             }
             else
             {
-                DestroyModels();
-                model = Instantiate(models[1], this.transform);
-                model.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+                model = models[1];
             }
         }
-        if (model != null)
+
+        if ((modelSet == null && model != null) || model != modelSet)
         {
-            model.transform.rotation = Quaternion.Euler(0, direction * 90, 0);
+            Destroy(modelSet);
+            modelSet = Instantiate(model, this.transform);
+            modelSet.transform.position = this.transform.position + new Vector3(0.5f, 0, 0.5f);
+            modelSet.transform.rotation = Quaternion.Euler(0, direction * 90, 0);
         }
     }
 

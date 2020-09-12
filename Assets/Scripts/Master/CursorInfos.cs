@@ -30,11 +30,13 @@ public class CursorInfos : MonoBehaviour
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                Time.timeScale = 1;
             }
             else
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
             }
         }
     }
