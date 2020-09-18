@@ -33,8 +33,7 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        //seed = Random.Range(0, 2000);
-        seed = 667;
+        seed = Random.Range(0, 2000);
         ChunkCreator();
     }
 
